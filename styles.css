@@ -12,11 +12,11 @@ h1 {
 }
 
 canvas {
-    margin-top: 20px;
-    cursor: pointer;
-    border: none; /* 移除默认的边框 */
-    max-width: 100%; /* 确保画布在小屏幕上不会超出屏幕宽度 */
-    height: auto; /* 保持宽高比 */
+    width: 90vw; /* 画布宽度为视口宽度的 90% */
+    height: 90vw; /* 保持画布为正方形 */
+    display: block;
+    margin: 0 auto;
+    border: none; /* 移除默认边框 */
 }
 
 #status {

@@ -4,10 +4,34 @@ const statusText = document.getElementById("status");
 
 const boardSize = 15; // 棋盘交叉点数量
 const margin = 20; // 棋盘边距
-const cellSize = (canvas.width - 2 * margin) / (boardSize - 1); // 每个格子的大小
+let cellSize = (canvas.width - 2 * margin) / (boardSize - 1); // 每个格子的大小
 const board = Array.from({ length: boardSize }, () => Array(boardSize).fill(0)); // 0: 空, 1: 玩家, 2: AI
 
 let gameOver = false;
+
+// 调整 Canvas 尺寸以适配设备
+function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width; // 设置逻辑宽度
+    canvas.height = rect.height; // 设置逻辑高度
+
+    // 重新计算单元格大小
+    cellSize = (canvas.width - 2 * margin) / (boardSize - 1);
+
+    // 重新绘制棋盘
+    drawBoard();
+
+    // 重新绘制棋子
+    for (let x = 0; x < boardSize; x++) {
+        for (let y = 0; y < boardSize; y++) {
+            if (board[x][y] === 1) {
+                drawPiece(x, y, 1);
+            } else if (board[x][y] === 2) {
+                drawPiece(x, y, 2);
+            }
+        }
+    }
+}
 
 // 绘制棋盘
 function drawBoard() {
@@ -73,7 +97,7 @@ function checkWin(x, y, player) {
     return false;
 }
 
-// 玩家下棋
+// 修正点击位置的计算
 canvas.addEventListener("click", (e) => {
     if (gameOver) return;
 
@@ -229,8 +253,10 @@ document.getElementById("restart").addEventListener("click", () => {
     drawBoard();
 });
 
-// 清除本地存储数据（如果有）
+// 初始化时调整 Canvas 尺寸
+window.addEventListener("resize", resizeCanvas);
 window.addEventListener("load", () => {
+    resizeCanvas();
     localStorage.clear();
     sessionStorage.clear();
 });
