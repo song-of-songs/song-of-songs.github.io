@@ -109,8 +109,16 @@ function aiMove() {
             if (board[x][y] === 0) {
                 // 模拟 AI 落子
                 board[x][y] = 2;
-                const score = evaluateBoard(2) - evaluateBoard(1); // AI 优先得分 - 玩家得分
-                board[x][y] = 0; // 恢复空位
+                const aiScore = evaluateBoard(2); // AI 的得分
+                board[x][y] = 0;
+
+                // 模拟玩家落子
+                board[x][y] = 1;
+                const playerScore = evaluateBoard(1); // 玩家得分
+                board[x][y] = 0;
+
+                // 综合得分：AI 优先得分 + 防守玩家威胁得分
+                const score = aiScore + playerScore * 0.8; // 防守权重为 0.8
 
                 if (score > bestScore) {
                     bestScore = score;
@@ -182,18 +190,19 @@ function evaluateBoard(player) {
                         }
                     }
 
+                    // 根据棋子数量和封堵情况评分
                     if (count >= 5) {
                         score += 10000; // 五连
                     } else if (count === 4 && blocked === 0) {
                         score += 1000; // 活四
                     } else if (count === 4 && blocked === 1) {
-                        score += 100; // 冲四
+                        score += 500; // 冲四
                     } else if (count === 3 && blocked === 0) {
-                        score += 100; // 活三
+                        score += 200; // 活三
                     } else if (count === 3 && blocked === 1) {
-                        score += 10; // 冲三
+                        score += 50; // 冲三
                     } else if (count === 2 && blocked === 0) {
-                        score += 10; // 活二
+                        score += 20; // 活二
                     }
                 }
             }
@@ -202,6 +211,29 @@ function evaluateBoard(player) {
 
     return score;
 }
+
+// 添加重新开始按钮的逻辑
+document.getElementById("restart").addEventListener("click", () => {
+    // 重置棋盘数据
+    for (let x = 0; x < boardSize; x++) {
+        for (let y = 0; y < boardSize; y++) {
+            board[x][y] = 0;
+        }
+    }
+
+    // 重置游戏状态
+    gameOver = false;
+    statusText.textContent = "游戏开始！轮到玩家下棋。";
+
+    // 重新绘制棋盘
+    drawBoard();
+});
+
+// 清除本地存储数据（如果有）
+window.addEventListener("load", () => {
+    localStorage.clear();
+    sessionStorage.clear();
+});
 
 // 初始化游戏
 drawBoard();
