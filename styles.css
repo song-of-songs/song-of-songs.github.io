@@ -9,6 +9,14 @@ body {
 h1 {
     margin: 20px 0;
     color: #333;
+    font-size: 32px;
+}
+
+.status-text {
+    margin: 10px 0;
+    font-size: 20px;
+    color: #4CAF50; /* 状态文字为绿色 */
+    font-weight: bold;
 }
 
 canvas {
@@ -41,10 +49,35 @@ button:hover {
     background-color: #45a049;
 }
 
+/* 胜利提示文字样式 */
+canvas.win-message {
+    font-size: 48px;
+    color: #ff7f7f; /* 浅红色 */
+    font-weight: bold;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out; /* 添加淡入动画 */
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    0% {
+        opacity: 0; /* 初始透明 */
+        transform: scale(0.8); /* 初始缩小 */
+    }
+    100% {
+        opacity: 1; /* 最终完全显示 */
+        transform: scale(1); /* 恢复正常大小 */
+    }
+}
+
 /* 手机端适配 */
 @media (max-width: 768px) {
     h1 {
         font-size: 24px; /* 缩小标题字体 */
+    }
+
+    .status-text {
+        font-size: 16px; /* 缩小状态文字字体 */
     }
 
     canvas {

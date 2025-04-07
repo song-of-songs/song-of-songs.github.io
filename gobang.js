@@ -100,6 +100,25 @@ function checkWin(x, y, player) {
     return false;
 }
 
+// 在棋盘上显示提示语
+function showResultMessage(message) {
+    ctx.save(); // 保存当前绘图状态
+    ctx.font = "48px Arial"; // 设置字体大小和样式
+    ctx.fillStyle = "#ff7f7f"; // 设置浅红色字体颜色
+    ctx.textAlign = "center"; // 文本居中
+    ctx.textBaseline = "middle"; // 文本基线居中
+    ctx.fillText(message, canvas.width / 2, canvas.height / 2); // 在棋盘中心绘制文本
+    ctx.restore(); // 恢复绘图状态
+
+    // 为 canvas 添加动画类
+    canvas.classList.add("win-message");
+
+    // 移除动画类（可选，确保动画可以重复触发）
+    setTimeout(() => {
+        canvas.classList.remove("win-message");
+    }, 1000); // 动画持续时间与 CSS 中的 `animation` 时间一致
+}
+
 // 修正点击位置的计算
 canvas.addEventListener("click", (e) => {
     if (gameOver) return;
@@ -112,9 +131,12 @@ canvas.addEventListener("click", (e) => {
         board[x][y] = 1;
         drawPiece(x, y, 1);
 
+        // 玩家获胜时调用
         if (checkWin(x, y, 1)) {
-            statusText.textContent = "玩家获胜！";
             gameOver = true;
+            showResultMessage("玩家获胜！");
+            document.getElementById("status").textContent = "玩家获胜！";
+            document.getElementById("status").style.color = "#ff7f7f"; // 状态文字也变为浅红色
             return;
         }
 
@@ -160,9 +182,12 @@ function aiMove() {
         board[x][y] = 2;
         drawPiece(x, y, 2);
 
+        // AI 获胜时调用
         if (checkWin(x, y, 2)) {
-            statusText.textContent = "AI 获胜！";
             gameOver = true;
+            showResultMessage("AI 获胜！");
+            document.getElementById("status").textContent = "AI 获胜！";
+            document.getElementById("status").style.color = "#ff7f7f"; // 状态文字也变为浅红色
             return;
         }
 
