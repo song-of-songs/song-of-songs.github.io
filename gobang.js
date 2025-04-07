@@ -12,8 +12,11 @@ let gameOver = false;
 // 调整 Canvas 尺寸以适配设备
 function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width; // 设置逻辑宽度
-    canvas.height = rect.height; // 设置逻辑高度
+    const maxLogicalSize = 600; // 限制逻辑尺寸的最大宽度
+    const deviceWidth = Math.min(rect.width, maxLogicalSize); // 取屏幕宽度和最大宽度的较小值
+
+    canvas.width = deviceWidth; // 设置逻辑宽度
+    canvas.height = deviceWidth; // 设置逻辑高度（保持正方形）
 
     // 重新计算单元格大小
     cellSize = (canvas.width - 2 * margin) / (boardSize - 1);
