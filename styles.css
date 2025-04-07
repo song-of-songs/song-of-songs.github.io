@@ -12,8 +12,9 @@ h1 {
 }
 
 canvas {
-    width: 90vw; /* 画布宽度为视口宽度的 90% */
-    height: 90vw; /* 保持画布为正方形 */
+    width: 90vw; /* 默认宽度为视口宽度的 90% */
+    height: auto; /* 保持宽高比 */
+    max-width: 600px; /* 限制最大宽度为 600px */
     display: block;
     margin: 0 auto;
     border: none; /* 移除默认边框 */
