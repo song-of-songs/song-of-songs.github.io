@@ -9,6 +9,84 @@ const board = Array.from({ length: boardSize }, () => Array(boardSize).fill(0));
 
 let gameOver = false;
 
+// 添加樱花飘落动画
+const sakuraImages = [];
+const sakuraCount = 30; // 樱花数量
+const sakuraParticles = [];
+
+// 加载樱花 SVG 图片
+for (let i = 0; i < sakuraCount; i++) {
+    const img = new Image();
+    img.src = "sakura.svg"; // 确保项目中有一张名为 sakura.svg 的 SVG 文件
+    sakuraImages.push(img);
+}
+
+// 初始化樱花粒子
+function initSakuraParticles() {
+    sakuraParticles.length = 0;
+    for (let i = 0; i < sakuraCount; i++) {
+        sakuraParticles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 20 + 10, // 樱花大小
+            speedX: Math.random() * 2 - 1, // 水平速度
+            speedY: Math.random() * 2 + 1, // 垂直速度
+            rotation: Math.random() * 360, // 初始旋转角度
+            rotationSpeed: Math.random() * 2 - 1, // 旋转速度
+            image: sakuraImages[Math.floor(Math.random() * sakuraImages.length)],
+        });
+    }
+}
+
+// 绘制樱花粒子
+function drawSakuraParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空画布
+    drawBoard(); // 重新绘制棋盘
+    for (const particle of sakuraParticles) {
+        ctx.save();
+        ctx.translate(particle.x, particle.y);
+        ctx.rotate((particle.rotation * Math.PI) / 180);
+        ctx.drawImage(
+            particle.image,
+            -particle.size / 2,
+            -particle.size / 2,
+            particle.size,
+            particle.size
+        );
+        ctx.restore();
+
+        // 更新粒子位置
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+        particle.rotation += particle.rotationSpeed;
+
+        // 如果粒子超出屏幕，重置到顶部
+        if (particle.y > canvas.height || particle.x < -50 || particle.x > canvas.width + 50) {
+            particle.x = Math.random() * canvas.width;
+            particle.y = -50;
+            particle.size = Math.random() * 20 + 10;
+            particle.speedX = Math.random() * 2 - 1;
+            particle.speedY = Math.random() * 2 + 1;
+            particle.rotation = Math.random() * 360;
+            particle.rotationSpeed = Math.random() * 2 - 1;
+        }
+    }
+
+    // 绘制棋子在樱花粒子之上
+    for (let x = 0; x < boardSize; x++) {
+        for (let y = 0; y < boardSize; y++) {
+            if (board[x][y] === 1) {
+                drawPiece(x, y, 1);
+            } else if (board[x][y] === 2) {
+                drawPiece(x, y, 2);
+            }
+        }
+    }
+
+    if (!gameOver) return; // 如果游戏未结束，不再继续动画
+    requestAnimationFrame(drawSakuraParticles); // 循环动画
+}
+
 // 调整 Canvas 尺寸以适配设备
 function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
@@ -137,6 +215,8 @@ canvas.addEventListener("click", (e) => {
             showResultMessage("玩家胜利了～");
             document.getElementById("status").textContent = "玩家胜利了～";
             document.getElementById("status").style.color = "#ff7f7f"; // 状态文字也变为浅红色
+            initSakuraParticles(); // 初始化樱花粒子
+            drawSakuraParticles(); // 开始樱花飘落动画
             return;
         }
 
@@ -188,6 +268,8 @@ function aiMove() {
             showResultMessage("AI胜利了～");
             document.getElementById("status").textContent = "AI胜利了～";
             document.getElementById("status").style.color = "#ff7f7f"; // 状态文字也变为浅红色
+            initSakuraParticles(); // 初始化樱花粒子
+            drawSakuraParticles(); // 开始樱花飘落动画
             return;
         }
 
@@ -277,6 +359,9 @@ document.getElementById("restart").addEventListener("click", () => {
     gameOver = false;
     statusText.textContent = "游戏开始！轮到玩家下棋。";
     statusText.style.color = "#4CAF50"; // 恢复状态文字为绿色
+
+    // 清空樱花粒子
+    sakuraParticles.length = 0;
 
     // 重新绘制棋盘
     drawBoard();

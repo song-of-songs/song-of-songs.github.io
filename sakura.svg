@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- 渐变定义 -->
+  <defs>
+    <radialGradient id="petalGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD1DC" />
+      <stop offset="100%" stop-color="#FF80AB" />
+    </radialGradient>
+  </defs>
+
+  <!-- 花瓣 -->
+  <g transform="translate(100, 100)">
+    <ellipse cx="0" cy="-50" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(0)" />
+    <ellipse cx="0" cy="-50" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(72)" />
+    <ellipse cx="0" cy="-50" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(144)" />
+    <ellipse cx="0" cy="-50" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(216)" />
+    <ellipse cx="0" cy="-50" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(288)" />
+  </g>
+
+  <!-- 花心 -->
+  <circle cx="100" cy="100" r="20" fill="#FF4081" />
+</svg>
