@@ -100,7 +100,7 @@ function checkWin(x, y, player) {
     return false;
 }
 
-// 在棋盘上显示提示语
+// 在棋盘上显示胜利提示语
 function showResultMessage(message) {
     ctx.save(); // 保存当前绘图状态
     ctx.font = "48px Arial"; // 设置字体大小和样式
@@ -110,7 +110,7 @@ function showResultMessage(message) {
     ctx.fillText(message, canvas.width / 2, canvas.height / 2); // 在棋盘中心绘制文本
     ctx.restore(); // 恢复绘图状态
 
-    // 为 canvas 添加动画类
+    // 为 canvas 添加动画类，仅影响文字
     canvas.classList.add("win-message");
 
     // 移除动画类（可选，确保动画可以重复触发）
@@ -134,8 +134,8 @@ canvas.addEventListener("click", (e) => {
         // 玩家获胜时调用
         if (checkWin(x, y, 1)) {
             gameOver = true;
-            showResultMessage("玩家获胜！");
-            document.getElementById("status").textContent = "玩家获胜！";
+            showResultMessage("玩家胜利了～");
+            document.getElementById("status").textContent = "玩家胜利了～";
             document.getElementById("status").style.color = "#ff7f7f"; // 状态文字也变为浅红色
             return;
         }
@@ -185,8 +185,8 @@ function aiMove() {
         // AI 获胜时调用
         if (checkWin(x, y, 2)) {
             gameOver = true;
-            showResultMessage("AI 获胜！");
-            document.getElementById("status").textContent = "AI 获胜！";
+            showResultMessage("AI胜利了～");
+            document.getElementById("status").textContent = "AI胜利了～";
             document.getElementById("status").style.color = "#ff7f7f"; // 状态文字也变为浅红色
             return;
         }
@@ -276,6 +276,7 @@ document.getElementById("restart").addEventListener("click", () => {
     // 重置游戏状态
     gameOver = false;
     statusText.textContent = "游戏开始！轮到玩家下棋。";
+    statusText.style.color = "#4CAF50"; // 恢复状态文字为绿色
 
     // 重新绘制棋盘
     drawBoard();
