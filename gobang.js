@@ -42,6 +42,19 @@ function initSakuraParticles() {
 function drawSakuraParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空画布
     drawBoard(); // 重新绘制棋盘
+
+    // 先绘制棋子
+    for (let x = 0; x < boardSize; x++) {
+        for (let y = 0; y < boardSize; y++) {
+            if (board[x][y] === 1) {
+                drawPiece(x, y, 1);
+            } else if (board[x][y] === 2) {
+                drawPiece(x, y, 2);
+            }
+        }
+    }
+
+    // 再绘制樱花粒子
     for (const particle of sakuraParticles) {
         ctx.save();
         ctx.translate(particle.x, particle.y);
@@ -69,17 +82,6 @@ function drawSakuraParticles() {
             particle.speedY = Math.random() * 2 + 1;
             particle.rotation = Math.random() * 360;
             particle.rotationSpeed = Math.random() * 2 - 1;
-        }
-    }
-
-    // 绘制棋子在樱花粒子之上
-    for (let x = 0; x < boardSize; x++) {
-        for (let y = 0; y < boardSize; y++) {
-            if (board[x][y] === 1) {
-                drawPiece(x, y, 1);
-            } else if (board[x][y] === 2) {
-                drawPiece(x, y, 2);
-            }
         }
     }
 
