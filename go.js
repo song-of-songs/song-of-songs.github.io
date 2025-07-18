@@ -75,13 +75,50 @@ function playNext() {
   }
 }
 
+// 工具函数：格式化秒为 mm:ss
+function formatTime(sec) {
+  sec = Math.floor(sec);
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
 // 进度条更新
 function updateProgress() {
   if (audio.duration) {
     const percent = (audio.currentTime / audio.duration) * 100;
     playerProgressBar.style.width = percent + '%';
+    // 显示时间到播放器组件内
+    let timeElem = document.getElementById('playerTime');
+    if (!timeElem) {
+      timeElem = document.createElement('span');
+      timeElem.id = 'playerTime';
+      timeElem.style.marginLeft = '16px';
+      timeElem.style.fontSize = '15px';
+      timeElem.style.color = '#7b3fa0';
+      // 假设播放器组件有 .player-bar 类
+      const playerBar = document.querySelector('.player-bar');
+      if (playerBar) {
+        // 避免重复插入
+        let oldTimeElem = playerBar.querySelector('#playerTime');
+        if (!oldTimeElem) {
+          // 插入到进度条后面
+          const progressWrap = playerBar.querySelector('.player-progress');
+          if (progressWrap && progressWrap.parentNode) {
+            progressWrap.parentNode.insertBefore(timeElem, progressWrap.nextSibling);
+          } else {
+            playerBar.appendChild(timeElem);
+          }
+        } else {
+          timeElem = oldTimeElem;
+        }
+      }
+    }
+    timeElem.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
   } else {
     playerProgressBar.style.width = '0%';
+    let timeElem = document.getElementById('playerTime');
+    if (timeElem) timeElem.textContent = '0:00 / 0:00';
   }
 }
 
@@ -92,6 +129,18 @@ document.querySelector('.player-progress').addEventListener('click', function(e)
   const percent = (e.clientX - rect.left) / rect.width;
   audio.currentTime = percent * audio.duration;
 });
+
+// 快进5秒
+function forward5s() {
+  if (audio.duration) {
+    audio.currentTime = Math.min(audio.currentTime + 5, audio.duration);
+  }
+}
+
+// 后退10秒
+function backward10s() {
+  audio.currentTime = Math.max(audio.currentTime - 10, 0);
+}
 
 // 事件绑定
 musicList.addEventListener('click', function(e) {
@@ -134,10 +183,21 @@ fetch('musicFiles.json')
   .then(data => {
     musicFiles = data;
     renderMusicList();
-    updateProgress();
+    updateProgress(); // 保证初始状态就显示进度条时间
   })
   .catch(err => {
     console.error('无法加载 musicFiles.json:', err);
     renderMusicList();
-    updateProgress();
+    updateProgress(); // 即使加载失败也显示初始进度条时间
   });
+
+// 你可以在播放器控制区添加按钮并绑定事件，例如：
+// 假设HTML中有<button id="backwardBtn">⏪10s</button> <button id="forwardBtn">5s⏩</button>
+const backwardBtn = document.getElementById('backwardBtn');
+const forwardBtn = document.getElementById('forwardBtn');
+
+if (backwardBtn) backwardBtn.addEventListener('click', backward10s);
+if (forwardBtn) forwardBtn.addEventListener('click', forward5s);
+
+// 页面加载时也调用一次，确保初始状态有进度条时间
+document.addEventListener('DOMContentLoaded', updateProgress);
