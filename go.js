@@ -142,6 +142,90 @@ function backward10s() {
   audio.currentTime = Math.max(audio.currentTime - 10, 0);
 }
 
+// 在播放器组件中添加播放速度选择功能
+function createSpeedSelector() {
+  let speedElem = document.getElementById('playerSpeed');
+  if (!speedElem) {
+    speedElem = document.createElement('select');
+    speedElem.id = 'playerSpeed';
+    speedElem.style.marginLeft = '18px';
+    speedElem.style.fontSize = '15px';
+    speedElem.style.color = '#7b3fa0';
+    speedElem.style.borderRadius = '6px';
+    speedElem.style.border = '1px solid #e1bee7';
+    speedElem.style.background = '#faf6ff';
+    speedElem.style.padding = '2px 8px';
+
+    const speeds = [
+      { label: 'x0.5', value: 0.5 },
+      { label: 'x0.75', value: 0.75 },
+      { label: 'x1', value: 1 },
+      { label: 'x1.25', value: 1.25 },
+      { label: 'x1.5', value: 1.5 },
+      { label: 'x1.75', value: 1.75 },
+      { label: 'x2', value: 2 },
+      { label: 'x2.5', value: 2.5 }
+    ];
+    speeds.forEach(opt => {
+      const option = document.createElement('option');
+      option.value = opt.value;
+      option.textContent = opt.label;
+      speedElem.appendChild(option);
+    });
+
+    // 默认1倍速
+    speedElem.value = 1;
+
+    // 插入到播放器组件右侧
+    const playerBar = document.querySelector('.player-bar');
+    if (playerBar) {
+      playerBar.appendChild(speedElem);
+    }
+  }
+
+  // 事件绑定
+  speedElem.addEventListener('change', function () {
+    audio.playbackRate = parseFloat(this.value);
+  });
+}
+
+// 单曲循环功能
+let isLoop = false;
+
+// 创建单曲循环按钮
+function createLoopBtn() {
+  let loopBtn = document.getElementById('loopBtn');
+  if (!loopBtn) {
+    loopBtn = document.createElement('button');
+    loopBtn.id = 'loopBtn';
+    loopBtn.textContent = '🔁';
+    loopBtn.title = '单曲循环';
+    loopBtn.style.marginLeft = '12px';
+    loopBtn.style.fontSize = '18px';
+    loopBtn.style.background = 'none';
+    loopBtn.style.border = 'none';
+    loopBtn.style.cursor = 'pointer';
+    loopBtn.style.color = isLoop ? '#d81b60' : '#7b3fa0';
+
+    // 插入到播放器组件右侧（速度选择器后）
+    const playerBar = document.querySelector('.player-bar');
+    const speedElem = document.getElementById('playerSpeed');
+    if (playerBar) {
+      if (speedElem && speedElem.nextSibling) {
+        playerBar.insertBefore(loopBtn, speedElem.nextSibling);
+      } else {
+        playerBar.appendChild(loopBtn);
+      }
+    }
+  }
+  loopBtn.style.color = isLoop ? '#d81b60' : '#7b3fa0';
+  loopBtn.addEventListener('click', function () {
+    isLoop = !isLoop;
+    audio.loop = isLoop;
+    loopBtn.style.color = isLoop ? '#d81b60' : '#7b3fa0';
+  });
+}
+
 // 事件绑定
 musicList.addEventListener('click', function(e) {
   if (e.target.classList.contains('play-btn')) {
@@ -201,3 +285,5 @@ if (forwardBtn) forwardBtn.addEventListener('click', forward5s);
 
 // 页面加载时也调用一次，确保初始状态有进度条时间
 document.addEventListener('DOMContentLoaded', updateProgress);
+document.addEventListener('DOMContentLoaded', createSpeedSelector);
+document.addEventListener('DOMContentLoaded', createLoopBtn);
