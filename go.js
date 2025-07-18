@@ -1,27 +1,6 @@
-// 自动获取根目录“musicFiles”文件夹下的文件名，并生成musicFiles数组列表
-async function fetchMusicFiles() {
-  try {
-    // 假设服务器支持目录API，返回文件名数组
-    const res = await fetch('musicFiles/');
-    const text = await res.text();
-    // 解析目录列表（以Apache/Nginx目录列表为例）
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-    const links = Array.from(doc.querySelectorAll('a'))
-      .map(a => a.getAttribute('href'))
-      .filter(href => href && href.endsWith('.mp3'));
-    // 生成musicFiles数组
-    return links.map(file => ({
-      name: decodeURIComponent(file.replace('.mp3', '')),
-      file: 'musicFiles/' + file
-    }));
-  } catch (e) {
-    console.error('获取音乐文件失败', e);
-    return [];
-  }
-}
-
+// 从根目录动态加载 musicFiles.json 文件生成 musicFiles 数组
 let musicFiles = [];
+
 const musicList = document.getElementById('musicList');
 const audio = document.getElementById('audio');
 const playerTitle = document.getElementById('playerTitle');
@@ -149,9 +128,16 @@ audio.addEventListener('pause', () => {
 audio.addEventListener('ended', playNext);
 audio.addEventListener('timeupdate', updateProgress);
 
-// 初始化
-(async function () {
-  musicFiles = await fetchMusicFiles();
-  renderMusicList();
-  updateProgress();
-})();
+// 初始化，加载 musicFiles.json 后再渲染
+fetch('musicFiles.json')
+  .then(res => res.json())
+  .then(data => {
+    musicFiles = data;
+    renderMusicList();
+    updateProgress();
+  })
+  .catch(err => {
+    console.error('无法加载 musicFiles.json:', err);
+    renderMusicList();
+    updateProgress();
+  });
