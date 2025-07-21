@@ -14,7 +14,7 @@ for fname in os.listdir(music_dir):
         })
 
 # 按 name 排序
-music_list.sort(key=lambda x: x['name'])
+music_list.sort(key=lambda x: x['name'], reverse=True)
 
 with open(output_json, 'w', encoding='utf-8') as f:
     json.dump(music_list, f, ensure_ascii=False, indent=2)

@@ -1,6 +1,15 @@
 import Playlist from './components/Playlist.js';
 import Player from './components/Player.js';
 
+// 在文件顶部添加如下代码，自动清除缓存
+if ('caches' in window) {
+  caches.keys().then(function(names) {
+    for (let name of names) caches.delete(name);
+  });
+}
+localStorage.clear();
+sessionStorage.clear();
+
 let musicFiles = [];
 
 fetch('musicFiles.json')
