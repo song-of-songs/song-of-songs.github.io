@@ -18,29 +18,41 @@ export default class Player {
   render() {
     this.container.innerHTML = `
       <div class="player-bar">
+        <div class="player-title" id="playerTitle">未在播放</div>
+        
         <div class="player-progress-area">
-          <button id="backwardBtn" class="circle-btn"><img src="ico/rewind10.svg" alt="后退10秒"></button>
           <div class="player-progress-wrap">
             <div class="player-progress-bg">
               <div class="player-progress" id="playerProgressBar"></div>
             </div>
           </div>
-          <button id="forwardBtn" class="circle-btn"><img src="ico/forward5.svg" alt="快进5秒"></button>
-          <span id="playerTime" class="player-time">0:00 / 0:00</span>
+          <div class="player-time-wrap">
+            <span id="playerTime" class="player-time">0:00 / 0:00</span>
+          </div>
         </div>
+        
         <div class="player-controls-area">
-          <button id="prevBtn"><img src="ico/prev.svg" alt="上一首"></button>
-          <button id="playPauseBtn"><img id="playPauseIcon" src="ico/play.svg" alt="播放"></button>
-          <button id="nextBtn"><img src="ico/next.svg" alt="下一首"></button>
-          <button id="loopBtn" class="loop-btn">循环</button>
-          <select id="playerSpeed" class="speed-select">
-            <option value="0.5">0.5x</option>
-            <option value="1" selected>1x</option>
-            <option value="1.5">1.5x</option>
-            <option value="2">2x</option>
-          </select>
+          <div class="player-controls-row">
+            <button id="backwardBtn" class="control-btn"><img src="ico/rewind10.svg" alt="后退10秒"></button>
+            <button id="prevBtn" class="control-btn"><img src="ico/prev.svg" alt="上一首"></button>
+            <button id="playPauseBtn" class="control-btn main-btn"><img id="playPauseIcon" src="ico/play.svg" alt="播放"></button>
+            <button id="nextBtn" class="control-btn"><img src="ico/next.svg" alt="下一首"></button>
+            <button id="forwardBtn" class="control-btn"><img src="ico/forward5.svg" alt="快进5秒"></button>
+          </div>
+          
+          <div class="player-controls-row">
+            <button id="loopBtn" class="control-btn secondary-btn">
+              <img src="ico/loop.svg" alt="循环">
+              <span>循环</span>
+            </button>
+            <select id="playerSpeed" class="speed-select secondary-btn">
+              <option value="0.5">0.5x</option>
+              <option value="1" selected>1x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2x</option>
+            </select>
+          </div>
         </div>
-        <div class="player-title" id="playerTitle">未在播放</div>
       </div>
     `;
   }
