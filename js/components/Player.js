@@ -45,10 +45,10 @@ export default class Player {
               <img src="ico/loop.svg" alt="循环">
             </button>
             <select id="playerSpeed" class="speed-select secondary-btn">
-              <option value="0.5">0.5x</option>
-              <option value="1" selected>1x</option>
-              <option value="1.5">1.5x</option>
-              <option value="2">2x</option>
+              <option value="0.5">x0.5</option>
+              <option value="1" selected>x1</option>
+              <option value="1.5">x1.5</option>
+              <option value="2">x2</option>
             </select>
           </div>
         </div>
