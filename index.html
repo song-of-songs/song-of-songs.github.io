@@ -2,30 +2,15 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <title>音乐播放器</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <ul class="music-list" id="musicList">
-    <!-- 音乐列表由JS动态生成 -->
-  </ul>
-  <div class="player-bar" id="playerBar">
-    <div class="player-info">
-      <div class="player-title" id="playerTitle">请选择音乐</div>
-      <div class="player-progress">
-        <div class="player-progress-bar" id="playerProgressBar"></div>
-      </div>
-    </div>
-    <div class="player-controls">
-      <button id="prevBtn" title="上一首">⏮️</button>
-      <button id="playPauseBtn" title="播放/暂停">▶️</button>
-      <button id="nextBtn" title="下一首">⏭️</button>
-      <button id="backwardBtn">⏪10s</button>
-      <button id="forwardBtn">5s⏩</button>
-    </div>
-    <audio id="audio" preload="auto"></audio>
+  <div id="app">
+    <ul class="music-list" id="musicList"></ul>
+    <div id="playerBar"></div>
   </div>
-  <script src="go.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

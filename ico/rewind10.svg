@@ -1,0 +1,6 @@
+<!-- 倒退10秒图标（逆时针环形箭头，内含“10”）rewind10.svg -->
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M24 16a8 8 0 1 1-4.7-7.28" stroke="#444" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M19.5 6.5l-.2 3.5 3.5-.2" stroke="#444" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="8" y="21" font-size="10" fill="#444" font-family="Arial" font-weight="bold">10</text>
+</svg>
