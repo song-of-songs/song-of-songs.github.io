@@ -11,10 +11,10 @@ body {
   margin: 0 auto;
   padding: 0;
   list-style: none;
-  max-height: calc(100vh - 180px);
+  max-height: calc(100vh - 220px); /* 增加高度空间 */
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding-bottom: 120px;
+  padding-bottom: 160px; /* 增加底部间距 */
 }
 .music-list li {
   background: #2c2c2e;
@@ -60,7 +60,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   z-index: 100;
-  padding: 15px 20px 20px;
+  padding: 12px 20px 16px;
+  height: auto;
 }
 
 .player-title {
@@ -224,5 +225,14 @@ body {
   .main-btn {
     width: 45px;
     height: 45px;
+  }
+  
+  .music-list {
+    padding-bottom: 140px; /* 移动端增加更多底部间距 */
+    max-height: calc(100vh - 200px);
+  }
+  
+  .player-bar {
+    padding: 10px 15px 14px; /* 移动端减少内边距 */
   }
 }
