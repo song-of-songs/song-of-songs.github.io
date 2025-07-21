@@ -152,7 +152,7 @@ export default class Player {
     title.textContent = this.currentIndex === -1 ? '未在播放' : this.musicFiles[this.currentIndex].name;
     // 播放/暂停图标
     const playPauseIcon = this.container.querySelector('#playPauseIcon');
-    playPauseIcon.src = this.isPlaying ? 'ico/Pause.svg' : 'ico/play.svg';
+    playPauseIcon.src = this.isPlaying ? 'ico/pause.svg' : 'ico/play.svg';
     playPauseIcon.alt = this.isPlaying ? '暂停' : '播放';
     // 循环按钮高亮
     const loopBtn = this.container.querySelector('#loopBtn');
