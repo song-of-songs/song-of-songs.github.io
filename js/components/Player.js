@@ -43,7 +43,6 @@ export default class Player {
           <div class="player-controls-row">
             <button id="loopBtn" class="control-btn secondary-btn">
               <img src="ico/loop.svg" alt="循环">
-              <span>循环</span>
             </button>
             <select id="playerSpeed" class="speed-select secondary-btn">
               <option value="0.5">0.5x</option>
