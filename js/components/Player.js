@@ -19,6 +19,11 @@ export default class Player {
   render() {
     this.container.innerHTML = `
       <div class="player-bar">
+        <!-- 加载状态指示器 -->
+        <div id="playerLoading" style="display: none; text-align: center; padding: 10px; color: #e0e0e0;">
+          加载中...
+        </div>
+        
         <!-- 视频播放区域 -->
         <div id="playerVideoArea" style="display: none; text-align: center; margin-bottom: 10px;">
           <video id="playerVideo" style="width: 100%; height: auto; aspect-ratio: 16/9;"></video>
@@ -65,6 +70,10 @@ export default class Player {
     this.video = this.container.querySelector('#playerVideo');
     this.videoArea = this.container.querySelector('#playerVideoArea');
     this.video.controls = true;
+    
+    // 初始化加载状态元素
+    this.loadingIndicator = this.container.querySelector('#playerLoading');
+    this.errorMessage = null;
   }
 
   bindEvents() {
@@ -89,23 +98,30 @@ export default class Player {
       }
     };
     
-    // 阻止播放器区域的触摸和滚轮事件，防止页面滚动
-    const playerBar = this.container.querySelector('.player-bar');
-    playerBar.addEventListener('touchstart', (e) => {
-      if (e.target === playerBar) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-    
-    playerBar.addEventListener('touchmove', (e) => {
-      if (e.target === playerBar) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-    
-    playerBar.addEventListener('wheel', (e) => {
+    // 阻止整个播放器区域的触摸事件，防止页面滚动
+    this.container.addEventListener('touchstart', (e) => {
       e.preventDefault();
     }, { passive: false });
+    
+    this.container.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    }, { passive: false });
+    
+    // 阻止整个播放器区域的滚轮事件
+    this.container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+    }, { passive: false });
+    
+    // 为所有交互元素添加额外的触摸事件阻止（确保事件不会冒泡到父元素）
+    const interactiveElements = this.container.querySelectorAll('button, .player-progress-bg, .speed-select');
+    interactiveElements.forEach(el => {
+      el.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+      });
+      el.addEventListener('touchmove', (e) => {
+        e.stopPropagation();
+      });
+    });
 
     // 音频事件
     this.audio.addEventListener('timeupdate', () => this.updateProgress());
@@ -117,11 +133,37 @@ export default class Player {
 
   play(idx) {
     if (idx < 0 || idx >= this.musicFiles.length) return;
+    
+    // 清除之前的错误信息
+    if (this.errorMessage) {
+      this.errorMessage.remove();
+      this.errorMessage = null;
+    }
+    
+    // 显示加载指示器
+    this.loadingIndicator.style.display = 'block';
+    
     this.currentIndex = idx;
     const item = this.musicFiles[idx];
     
     // 始终隐藏视频区域
     this.videoArea.style.display = 'none';
+    
+    // 设置加载完成后的回调
+    const onLoaded = () => {
+      this.loadingIndicator.style.display = 'none';
+      this.isPlaying = true;
+      this.updateUI();
+      this.playlist.setCurrentIndex(idx);
+    };
+    
+    // 设置加载失败的回调
+    const onError = () => {
+      this.loadingIndicator.style.display = 'none';
+      this.showError(`加载失败: ${item.name}`);
+      this.isPlaying = false;
+      this.updateUI();
+    };
     
     if (this.enableVideoPlayback && item.type === 'video') {
       // 播放视频（如果启用视频播放）
@@ -129,28 +171,71 @@ export default class Player {
       // 显示进度条区域（视频也需要进度条）
       this.container.querySelector('.player-progress-area').style.display = 'block';
       
+      // 重置视频并设置新源
+      this.video.src = '';
       this.video.src = item.file;
       this.video.playbackRate = this.speed;
       this.video.loop = this.isLoop;
-      this.video.play();
+      
+      // 移除旧的事件监听器
+      this.video.removeEventListener('canplay', onLoaded);
+      this.video.removeEventListener('error', onError);
+      
+      // 添加新的事件监听器
+      this.video.addEventListener('canplay', onLoaded, { once: true });
+      this.video.addEventListener('error', onError, { once: true });
+      
+      this.video.play().catch(e => {
+        console.error('视频播放失败:', e);
+        onError();
+      });
       
       // 暂停音频
       this.audio.pause();
-      this.isPlaying = true;
     } else {
       // 播放音频（包括当视频播放功能关闭时）
       // 显示进度条区域
       this.container.querySelector('.player-progress-area').style.display = 'block';
       
+      // 重置音频并设置新源
+      this.audio.src = '';
       this.audio.src = item.file;
       this.audio.playbackRate = this.speed;
       this.audio.loop = this.isLoop;
-      this.audio.play();
-      this.isPlaying = true;
+      
+      // 移除旧的事件监听器
+      this.audio.removeEventListener('canplay', onLoaded);
+      this.audio.removeEventListener('error', onError);
+      
+      // 添加新的事件监听器
+      this.audio.addEventListener('canplay', onLoaded, { once: true });
+      this.audio.addEventListener('error', onError, { once: true });
+      
+      this.audio.play().catch(e => {
+        console.error('音频播放失败:', e);
+        onError();
+      });
+    }
+  }
+  
+  // 显示错误信息
+  showError(message) {
+    // 移除现有的错误信息
+    if (this.errorMessage) {
+      this.errorMessage.remove();
     }
     
-    this.updateUI();
-    this.playlist.setCurrentIndex(idx);
+    // 创建错误信息元素
+    this.errorMessage = document.createElement('div');
+    this.errorMessage.textContent = message;
+    this.errorMessage.style.color = '#ff6b6b';
+    this.errorMessage.style.textAlign = 'center';
+    this.errorMessage.style.padding = '10px';
+    this.errorMessage.style.marginTop = '10px';
+    
+    // 插入到播放器区域
+    const playerBar = this.container.querySelector('.player-bar');
+    playerBar.insertBefore(this.errorMessage, playerBar.firstChild);
   }
 
   togglePlayPause() {
