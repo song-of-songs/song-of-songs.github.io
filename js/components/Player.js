@@ -71,6 +71,24 @@ export default class Player {
       const percent = (e.clientX - rect.left) / rect.width;
       if (this.audio.duration) this.audio.currentTime = percent * this.audio.duration;
     };
+    
+    // 阻止播放器区域的触摸和滚轮事件，防止页面滚动
+    const playerBar = this.container.querySelector('.player-bar');
+    playerBar.addEventListener('touchstart', (e) => {
+      if (e.target === playerBar) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    
+    playerBar.addEventListener('touchmove', (e) => {
+      if (e.target === playerBar) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    
+    playerBar.addEventListener('wheel', (e) => {
+      e.preventDefault();
+    }, { passive: false });
 
     // 音频事件
     this.audio.addEventListener('timeupdate', () => this.updateProgress());

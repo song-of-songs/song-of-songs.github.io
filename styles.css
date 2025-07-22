@@ -62,6 +62,10 @@ body {
   z-index: 100;
   padding: 12px 20px 16px;
   height: auto;
+  /* 防止播放器区域滑动屏幕 */
+  touch-action: none;
+  overscroll-behavior: none;
+  overflow: hidden;
 }
 
 .player-title {
