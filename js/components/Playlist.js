@@ -39,21 +39,43 @@ export default class Playlist {
               document.body.removeChild(video);
               video.removeEventListener('ended', handleFullscreenChange);
               video.removeEventListener('fullscreenchange', handleFullscreenChange);
+              video.removeEventListener('webkitendfullscreen', handleFullscreenChange); // iOS
             }
           };
           
           video.addEventListener('ended', handleFullscreenChange);
           video.addEventListener('fullscreenchange', handleFullscreenChange);
+          video.addEventListener('webkitendfullscreen', handleFullscreenChange); // iOS
           
           document.body.appendChild(video);
           
-          // 请求全屏并播放
-          video.requestFullscreen().then(() => {
-            video.play();
-          }).catch(err => {
-            console.error('全屏请求失败:', err);
-            document.body.removeChild(video);
-          });
+          // 移动端特殊处理
+          const tryFullscreen = () => {
+            // 标准全屏API
+            if (video.requestFullscreen) {
+              video.requestFullscreen().then(() => {
+                video.play().catch(e => console.error('播放失败:', e));
+              }).catch(err => {
+                console.error('标准全屏失败:', err);
+                tryIOSFullscreen();
+              });
+            } else {
+              tryIOSFullscreen();
+            }
+          };
+          
+          // iOS特定全屏方法
+          const tryIOSFullscreen = () => {
+            if (video.webkitEnterFullscreen) {
+              video.webkitEnterFullscreen();
+              video.play().catch(e => console.error('iOS播放失败:', e));
+            } else {
+              console.error('该设备不支持全屏');
+              document.body.removeChild(video);
+            }
+          };
+          
+          tryFullscreen();
         } else {
           if (this.player) this.player.play(idx);
         }
