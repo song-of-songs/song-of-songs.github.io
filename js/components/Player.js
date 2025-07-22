@@ -103,6 +103,9 @@ export default class Player {
     // 音频事件
     this.audio.addEventListener('timeupdate', () => this.updateProgress());
     this.audio.addEventListener('ended', () => this.onEnded());
+    
+    // 视频结束事件处理
+    this.video.addEventListener('ended', () => this.onVideoEnded());
   }
 
   play(idx) {
@@ -266,6 +269,15 @@ export default class Player {
     if (this.isLoop) {
       this.audio.currentTime = 0;
       this.audio.play();
+    } else {
+      this.playNext();
+    }
+  }
+  
+  onVideoEnded() {
+    if (this.isLoop) {
+      this.video.currentTime = 0;
+      this.video.play();
     } else {
       this.playNext();
     }
