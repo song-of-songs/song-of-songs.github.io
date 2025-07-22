@@ -18,6 +18,11 @@ export default class Player {
   render() {
     this.container.innerHTML = `
       <div class="player-bar">
+        <!-- 视频播放区域 -->
+        <div id="playerVideoArea" style="display: none; text-align: center; margin-bottom: 10px;">
+          <video id="playerVideo" style="width: 100%; height: auto; aspect-ratio: 16/9;"></video>
+        </div>
+        
         <div class="player-title" id="playerTitle">未在播放</div>
         
         <div class="player-progress-area">
@@ -54,6 +59,11 @@ export default class Player {
         </div>
       </div>
     `;
+    
+    // 初始化视频元素
+    this.video = this.container.querySelector('#playerVideo');
+    this.videoArea = this.container.querySelector('#playerVideoArea');
+    this.video.controls = true;
   }
 
   bindEvents() {
@@ -98,11 +108,35 @@ export default class Player {
   play(idx) {
     if (idx < 0 || idx >= this.musicFiles.length) return;
     this.currentIndex = idx;
-    this.audio.src = this.musicFiles[idx].file;
-    this.audio.playbackRate = this.speed;
-    this.audio.loop = this.isLoop;
-    this.audio.play();
-    this.isPlaying = true;
+    const item = this.musicFiles[idx];
+    
+    if (item.type === 'video') {
+      // 播放视频
+      this.videoArea.style.display = 'block';
+      // 隐藏进度条区域
+      this.container.querySelector('.player-progress-area').style.display = 'none';
+      
+      this.video.src = item.file;
+      this.video.playbackRate = this.speed;
+      this.video.loop = this.isLoop;
+      this.video.play();
+      
+      // 暂停音频
+      this.audio.pause();
+      this.isPlaying = true;
+    } else {
+      // 播放音频
+      this.videoArea.style.display = 'none';
+      // 显示进度条区域
+      this.container.querySelector('.player-progress-area').style.display = 'block';
+      
+      this.audio.src = item.file;
+      this.audio.playbackRate = this.speed;
+      this.audio.loop = this.isLoop;
+      this.audio.play();
+      this.isPlaying = true;
+    }
+    
     this.updateUI();
     this.playlist.setCurrentIndex(idx);
   }
@@ -112,12 +146,24 @@ export default class Player {
       this.play(0);
       return;
     }
-    if (this.audio.paused) {
-      this.audio.play();
-      this.isPlaying = true;
+    
+    const item = this.musicFiles[this.currentIndex];
+    if (item.type === 'video') {
+      if (this.video.paused) {
+        this.video.play();
+        this.isPlaying = true;
+      } else {
+        this.video.pause();
+        this.isPlaying = false;
+      }
     } else {
-      this.audio.pause();
-      this.isPlaying = false;
+      if (this.audio.paused) {
+        this.audio.play();
+        this.isPlaying = true;
+      } else {
+        this.audio.pause();
+        this.isPlaying = false;
+      }
     }
     this.updateUI();
   }
@@ -133,31 +179,60 @@ export default class Player {
   }
 
   backward10s() {
-    this.audio.currentTime = Math.max(this.audio.currentTime - 10, 0);
+    const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
+    if (item && item.type === 'video') {
+      this.video.currentTime = Math.max(this.video.currentTime - 10, 0);
+    } else {
+      this.audio.currentTime = Math.max(this.audio.currentTime - 10, 0);
+    }
   }
 
   forward5s() {
-    this.audio.currentTime = Math.min(this.audio.currentTime + 5, this.audio.duration || 0);
+    const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
+    if (item && item.type === 'video') {
+      this.video.currentTime = Math.min(this.video.currentTime + 5, this.video.duration || 0);
+    } else {
+      this.audio.currentTime = Math.min(this.audio.currentTime + 5, this.audio.duration || 0);
+    }
   }
 
   toggleLoop() {
     this.isLoop = !this.isLoop;
     this.audio.loop = this.isLoop;
+    if (this.video) {
+      this.video.loop = this.isLoop;
+    }
     this.updateUI();
   }
 
   setSpeed(val) {
     this.speed = parseFloat(val);
     this.audio.playbackRate = this.speed;
+    if (this.video) {
+      this.video.playbackRate = this.speed;
+    }
   }
 
   updateProgress() {
     const progressBar = this.container.querySelector('#playerProgressBar');
     const playerTime = this.container.querySelector('#playerTime');
-    if (this.audio.duration) {
-      const percent = (this.audio.currentTime / this.audio.duration) * 100;
+    
+    const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
+    let currentTime = 0;
+    let duration = 0;
+    
+    if (item && item.type === 'video') {
+      currentTime = this.video.currentTime;
+      duration = this.video.duration;
+    } else {
+      currentTime = this.audio.currentTime;
+      duration = this.audio.duration;
+    }
+    
+    if (duration) {
+      const percent = (currentTime / duration) * 100;
       progressBar.style.width = percent + '%';
-      playerTime.textContent = `${formatTime(this.audio.currentTime)} / ${formatTime(this.audio.duration)}`;
+      playerTime.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
     } else {
       progressBar.style.width = '0%';
       playerTime.textContent = '0:00 / 0:00';
