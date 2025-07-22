@@ -19,9 +19,44 @@ export default class Playlist {
       li.className = idx === this.currentIndex ? 'active' : '';
       li.innerHTML = `<span class="music-title">${item.name}</span>`;
       li.addEventListener('click', () => {
+        const item = this.musicFiles[idx];
         this.currentIndex = idx;
         this.updateActive();
-        if (this.player) this.player.play(idx);
+        
+        if (item.type === 'video') {
+          // 创建视频元素
+          const video = document.createElement('video');
+          video.src = item.file;
+          video.controls = true;
+          video.style.width = '100%';
+          video.style.height = '100%';
+          video.style.objectFit = 'contain';
+          video.style.backgroundColor = 'black';
+          
+          // 处理全屏退出事件
+          const handleFullscreenChange = () => {
+            if (!document.fullscreenElement) {
+              document.body.removeChild(video);
+              video.removeEventListener('ended', handleFullscreenChange);
+              video.removeEventListener('fullscreenchange', handleFullscreenChange);
+            }
+          };
+          
+          video.addEventListener('ended', handleFullscreenChange);
+          video.addEventListener('fullscreenchange', handleFullscreenChange);
+          
+          document.body.appendChild(video);
+          
+          // 请求全屏并播放
+          video.requestFullscreen().then(() => {
+            video.play();
+          }).catch(err => {
+            console.error('全屏请求失败:', err);
+            document.body.removeChild(video);
+          });
+        } else {
+          if (this.player) this.player.play(idx);
+        }
       });
       this.container.appendChild(li);
     });
