@@ -10,6 +10,7 @@ export default class Player {
     this.isLoop = false;
     this.isPlaying = false;
     this.speed = 1;
+    this.enableVideoPlayback = false; // 视频播放功能开关
     this.render();
     this.bindEvents();
     this.updateUI();
@@ -75,11 +76,17 @@ export default class Player {
     this.container.querySelector('#loopBtn').onclick = () => this.toggleLoop();
     this.container.querySelector('#playerSpeed').onchange = (e) => this.setSpeed(e.target.value);
 
-    // 进度条点击跳转
+    // 进度条点击跳转（支持视频和音频）
     this.container.querySelector('.player-progress-bg').onclick = (e) => {
       const rect = e.target.getBoundingClientRect();
       const percent = (e.clientX - rect.left) / rect.width;
-      if (this.audio.duration) this.audio.currentTime = percent * this.audio.duration;
+      
+      const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
+      if (item && item.type === 'video' && this.enableVideoPlayback) {
+        if (this.video.duration) this.video.currentTime = percent * this.video.duration;
+      } else {
+        if (this.audio.duration) this.audio.currentTime = percent * this.audio.duration;
+      }
     };
     
     // 阻止播放器区域的触摸和滚轮事件，防止页面滚动
@@ -113,11 +120,14 @@ export default class Player {
     this.currentIndex = idx;
     const item = this.musicFiles[idx];
     
-    if (item.type === 'video') {
-      // 播放视频
+    // 始终隐藏视频区域
+    this.videoArea.style.display = 'none';
+    
+    if (this.enableVideoPlayback && item.type === 'video') {
+      // 播放视频（如果启用视频播放）
       this.videoArea.style.display = 'block';
-      // 隐藏进度条区域
-      this.container.querySelector('.player-progress-area').style.display = 'none';
+      // 显示进度条区域（视频也需要进度条）
+      this.container.querySelector('.player-progress-area').style.display = 'block';
       
       this.video.src = item.file;
       this.video.playbackRate = this.speed;
@@ -128,8 +138,7 @@ export default class Player {
       this.audio.pause();
       this.isPlaying = true;
     } else {
-      // 播放音频
-      this.videoArea.style.display = 'none';
+      // 播放音频（包括当视频播放功能关闭时）
       // 显示进度条区域
       this.container.querySelector('.player-progress-area').style.display = 'block';
       
@@ -151,7 +160,10 @@ export default class Player {
     }
     
     const item = this.musicFiles[this.currentIndex];
-    if (item.type === 'video') {
+    // 检查是否启用了视频播放并且当前项是视频
+    const isVideo = this.enableVideoPlayback && item.type === 'video';
+    
+    if (isVideo) {
       if (this.video.paused) {
         this.video.play();
         this.isPlaying = true;
@@ -183,7 +195,10 @@ export default class Player {
 
   backward10s() {
     const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
-    if (item && item.type === 'video') {
+    // 检查是否启用了视频播放并且当前项是视频
+    const isVideo = item && this.enableVideoPlayback && item.type === 'video';
+    
+    if (isVideo) {
       this.video.currentTime = Math.max(this.video.currentTime - 10, 0);
     } else {
       this.audio.currentTime = Math.max(this.audio.currentTime - 10, 0);
@@ -192,7 +207,10 @@ export default class Player {
 
   forward5s() {
     const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
-    if (item && item.type === 'video') {
+    // 检查是否启用了视频播放并且当前项是视频
+    const isVideo = item && this.enableVideoPlayback && item.type === 'video';
+    
+    if (isVideo) {
       this.video.currentTime = Math.min(this.video.currentTime + 5, this.video.duration || 0);
     } else {
       this.audio.currentTime = Math.min(this.audio.currentTime + 5, this.audio.duration || 0);
@@ -224,7 +242,7 @@ export default class Player {
     let currentTime = 0;
     let duration = 0;
     
-    if (item && item.type === 'video') {
+    if (item && item.type === 'video' && this.enableVideoPlayback) {
       currentTime = this.video.currentTime;
       duration = this.video.duration;
     } else {
