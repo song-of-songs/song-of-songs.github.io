@@ -1,46 +1,282 @@
 [
   {
+    "name": "鴿子眼 (Dove's eyes)-1-1",
+    "file": "musicFiles/鴿子眼 (Dove's eyes)-1-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "開路者 Way Maker-1",
+    "file": "musicFiles/開路者 Way Maker-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "配得 Worthy  HTBB 敬拜  2022 受难日-1",
+    "file": "musicFiles/配得 Worthy  HTBB 敬拜  2022 受难日-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "跟隨祢心意 Live字幕ＭＶThe Hope-1",
+    "file": "musicFiles/跟隨祢心意 Live字幕ＭＶThe Hope-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "跟隨祢心意 (Live)原創敬拜歌曲The Hope-1",
+    "file": "musicFiles/跟隨祢心意 (Live)原創敬拜歌曲The Hope-1.mp4",
+    "type": "video"
+  },
+  {
     "name": "讚美昇起 copy",
-    "file": "musicFiles/讚美昇起 copy.mp3"
+    "file": "musicFiles/讚美昇起 copy.mp3",
+    "type": "audio"
   },
   {
     "name": "讚美昇起",
-    "file": "musicFiles/讚美昇起.mp3"
+    "file": "musicFiles/讚美昇起.mp3",
+    "type": "audio"
+  },
+  {
+    "name": "胜利电吉他 (音调 -2.00 - 节拍 100)",
+    "file": "musicFiles/胜利电吉他 (音调 -2.00 - 节拍 100).mp3",
+    "type": "audio"
+  },
+  {
+    "name": "聖所 (Live)Worship CoverThe Hope-1",
+    "file": "musicFiles/聖所 (Live)Worship CoverThe Hope-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "窗外的世界 World Outside Your Window - Hillsong Young &-1",
+    "file": "musicFiles/窗外的世界 World Outside Your Window - Hillsong Young &-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "祢是我的一切 You Are My All In All-1",
+    "file": "musicFiles/祢是我的一切 You Are My All In All-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "看见光明 See The Light  HTBB 敬拜-1",
+    "file": "musicFiles/看见光明 See The Light  HTBB 敬拜-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "看見光明 See The Light - Hillsong Worship [ 動態歌詞 ] @Ro-1",
+    "file": "musicFiles/看見光明 See The Light - Hillsong Worship [ 動態歌詞 ] @Ro-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火焰中那一位 Another In The Fire-1",
+    "file": "musicFiles/火焰中那一位 Another In The Fire-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火把音樂【身旁 By My Side】Official Music Video-1",
+    "file": "musicFiles/火把音樂【身旁 By My Side】Official Music Video-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火把音樂【當我抬頭仰望 When I Look at the Sky】Official Music-1",
+    "file": "musicFiles/火把音樂【當我抬頭仰望 When I Look at the Sky】Official Music-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火把音樂【澆灌的花園 A Watered Garden】Official Music Video-1",
+    "file": "musicFiles/火把音樂【澆灌的花園 A Watered Garden】Official Music Video-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火把音樂【我需要祢 I Need You】Official Music Video-1",
+    "file": "musicFiles/火把音樂【我需要祢 I Need You】Official Music Video-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火把音樂【就是單單 Simply Come】Official Music Video-1",
+    "file": "musicFiles/火把音樂【就是單單 Simply Come】Official Music Video-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火把音樂【器皿 Vessel】Official Music Video-1",
+    "file": "musicFiles/火把音樂【器皿 Vessel】Official Music Video-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "火把音樂【以馬內利 Emmanuel】Official Music Video-1",
+    "file": "musicFiles/火把音樂【以馬內利 Emmanuel】Official Music Video-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "暴風圍繞祢 Storm All Around You-1",
+    "file": "musicFiles/暴風圍繞祢 Storm All Around You-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "普世欢腾 Joy to the World  HTBB 敬拜  2020 圣诞-1",
+    "file": "musicFiles/普世欢腾 Joy to the World  HTBB 敬拜  2020 圣诞-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "搞懂七種調式，以及永遠把它們的名字記起來！",
+    "file": "musicFiles/搞懂七種調式，以及永遠把它們的名字記起來！.mp4",
+    "type": "video"
   },
   {
     "name": "我神我王 copy",
-    "file": "musicFiles/我神我王 copy.mp3"
+    "file": "musicFiles/我神我王 copy.mp3",
+    "type": "audio"
   },
   {
     "name": "我神我王",
-    "file": "musicFiles/我神我王.mp3"
+    "file": "musicFiles/我神我王.mp3",
+    "type": "audio"
+  },
+  {
+    "name": "感恩的愛 Grateful Love-1",
+    "file": "musicFiles/感恩的愛 Grateful Love-1.mp4",
+    "type": "video"
   },
   {
     "name": "得胜的宣告 copy",
-    "file": "musicFiles/得胜的宣告 copy.mp3"
+    "file": "musicFiles/得胜的宣告 copy.mp3",
+    "type": "audio"
   },
   {
     "name": "得胜的宣告",
-    "file": "musicFiles/得胜的宣告.mp3"
+    "file": "musicFiles/得胜的宣告.mp3",
+    "type": "audio"
+  },
+  {
+    "name": "平安是你 (Live)原創敬拜歌曲The Hope-1",
+    "file": "musicFiles/平安是你 (Live)原創敬拜歌曲The Hope-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "如鹿切慕溪水 As the Deer 中英歌詞 伴奏版 Piano Cover-1",
+    "file": "musicFiles/如鹿切慕溪水 As the Deer 中英歌詞 伴奏版 Piano Cover-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "如今我信靠-1",
+    "file": "musicFiles/如今我信靠-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "如今我信靠 In God We Trust  HTBB 敬拜-1-1",
+    "file": "musicFiles/如今我信靠 In God We Trust  HTBB 敬拜-1-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "如今我信靠 In God We Trust  HTBB 敬拜-1",
+    "file": "musicFiles/如今我信靠 In God We Trust  HTBB 敬拜-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "大衛帳幕的榮耀【如明光照耀／Shining Light】Official Lyric Video-1",
+    "file": "musicFiles/大衛帳幕的榮耀【如明光照耀／Shining Light】Official Lyric Video-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "大膽接近你寶座 Boldly I Approach-1-1 2",
+    "file": "musicFiles/大膽接近你寶座 Boldly I Approach-1-1 2.mp4",
+    "type": "video"
+  },
+  {
+    "name": "大膽接近你寶座 Boldly I Approach-1-1",
+    "file": "musicFiles/大膽接近你寶座 Boldly I Approach-1-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "大膽接近你寶座 Boldly I Approach-1",
+    "file": "musicFiles/大膽接近你寶座 Boldly I Approach-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "大能十架 Mighty Cross  HTBB 敬拜  2021 受难日-1 2",
+    "file": "musicFiles/大能十架 Mighty Cross  HTBB 敬拜  2021 受难日-1 2.mp4",
+    "type": "video"
+  },
+  {
+    "name": "大能十架 Mighty Cross  HTBB 敬拜  2021 受难日-1",
+    "file": "musicFiles/大能十架 Mighty Cross  HTBB 敬拜  2021 受难日-1.mp4",
+    "type": "video"
   },
   {
     "name": "坚强的爱",
-    "file": "musicFiles/坚强的爱.mp3"
+    "file": "musicFiles/坚强的爱.mp3",
+    "type": "audio"
   },
   {
     "name": "因你的爱 copy",
-    "file": "musicFiles/因你的爱 copy.mp3"
+    "file": "musicFiles/因你的爱 copy.mp3",
+    "type": "audio"
   },
   {
     "name": "因你的爱",
-    "file": "musicFiles/因你的爱.mp3"
+    "file": "musicFiles/因你的爱.mp3",
+    "type": "audio"
+  },
+  {
+    "name": "十分鐘以內，一次搞懂所有的現代和弦代號！",
+    "file": "musicFiles/十分鐘以內，一次搞懂所有的現代和弦代號！.mp4",
+    "type": "video"
+  },
+  {
+    "name": "十分鐘之內，一次搞懂「單拍子」和「複拍子」！",
+    "file": "musicFiles/十分鐘之內，一次搞懂「單拍子」和「複拍子」！.mp4",
+    "type": "video"
+  },
+  {
+    "name": "八分鐘以內，一次搞懂音程名稱！",
+    "file": "musicFiles/八分鐘以內，一次搞懂音程名稱！.mp4",
+    "type": "video"
+  },
+  {
+    "name": "來現在是敬拜時刻 Come, Now Is The Time To Worship - [中英歌詞版-1",
+    "file": "musicFiles/來現在是敬拜時刻 Come, Now Is The Time To Worship - [中英歌詞版-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "你配得所有 Worth it All-1-1",
+    "file": "musicFiles/你配得所有 Worth it All-1-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "你配得所有 Worth it All-1",
+    "file": "musicFiles/你配得所有 Worth it All-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "你是我的獎賞 You Are My Great Reward-1",
+    "file": "musicFiles/你是我的獎賞 You Are My Great Reward-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "你同在如天堂降臨 Your Presence Is Heaven [約書亞樂團專輯 - 亞洲為耶穌]-1-1",
+    "file": "musicFiles/你同在如天堂降臨 Your Presence Is Heaven [約書亞樂團專輯 - 亞洲為耶穌]-1-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "什麼是大調和小調？",
+    "file": "musicFiles/什麼是大調和小調？.mp4",
+    "type": "video"
+  },
+  {
+    "name": "不再一樣 Never the Same 歌詞版-1",
+    "file": "musicFiles/不再一樣 Never the Same 歌詞版-1.mp4",
+    "type": "video"
+  },
+  {
+    "name": "三天之后 The Third Day  HTBB 敬拜  2022 受难日-1",
+    "file": "musicFiles/三天之后 The Third Day  HTBB 敬拜  2022 受难日-1.mp4",
+    "type": "video"
   },
   {
     "name": "04歇息处 copy",
-    "file": "musicFiles/04歇息处 copy.mp3"
+    "file": "musicFiles/04歇息处 copy.mp3",
+    "type": "audio"
   },
   {
     "name": "04歇息处",
-    "file": "musicFiles/04歇息处.mp3"
+    "file": "musicFiles/04歇息处.mp3",
+    "type": "audio"
   }
 ]
