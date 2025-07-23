@@ -9,6 +9,7 @@ export default class Player {
     this.currentIndex = -1;
     this.isLoop = false;
     this.isPlaying = false;
+    this.isLoading = false; // 新增加载状态标志
     this.speed = 1;
     this.enableVideoPlayback = false; // 视频播放功能开关
     this.render();
@@ -152,11 +153,16 @@ export default class Player {
       this.errorMessage = null;
     }
     
+    this.currentIndex = idx;
+    const item = this.musicFiles[idx];
+    
+    // 立即更新UI显示正在加载的歌曲名称
+    this.updateUI();
     // 显示加载指示器
     this.loadingIndicator.style.display = 'block';
     
-    this.currentIndex = idx;
-    const item = this.musicFiles[idx];
+    // 设置临时加载状态
+    this.isLoading = true;
     
     // 始终隐藏视频区域
     this.videoArea.style.display = 'none';
@@ -165,6 +171,7 @@ export default class Player {
     const onLoaded = () => {
       this.loadingIndicator.style.display = 'none';
       this.isPlaying = true;
+      this.isLoading = false; // 清除加载状态
       this.updateUI();
       this.playlist.setCurrentIndex(idx);
     };
@@ -415,7 +422,18 @@ export default class Player {
   updateUI() {
     // 歌名
     const title = this.container.querySelector('#playerTitle');
-    title.textContent = this.currentIndex === -1 ? '未在播放' : this.musicFiles[this.currentIndex].name;
+    
+    if (this.isLoading && this.currentIndex !== -1) {
+      // 显示正在加载状态
+      title.textContent = `${this.musicFiles[this.currentIndex].name} (正在加载...)`;
+    } else {
+      title.textContent = this.currentIndex === -1 ? '未在播放' : this.musicFiles[this.currentIndex].name;
+    }
+    
+    // 如果当前没有在加载，但歌曲正在播放，则显示正常状态
+    if (!this.isLoading && this.currentIndex !== -1 && this.isPlaying) {
+      title.textContent = this.musicFiles[this.currentIndex].name;
+    }
     // 播放/暂停图标
     const playPauseIcon = this.container.querySelector('#playPauseIcon');
     playPauseIcon.src = this.isPlaying ? 'ico/pause.svg' : 'ico/play.svg';
