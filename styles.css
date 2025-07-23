@@ -107,6 +107,16 @@ body {
   transition: width 0.2s;
 }
 
+.player-buffer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(255, 228, 228, 0.208); /* 更鲜明的浅红色 */
+  z-index: 1;
+  border-radius: 3px;
+}
+
 .player-time-wrap {
   display: flex;
   justify-content: space-between;
