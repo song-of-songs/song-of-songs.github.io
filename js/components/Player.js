@@ -34,6 +34,9 @@ export default class Player {
         <div class="player-progress-area">
           <div class="player-progress-wrap">
             <div class="player-progress-bg">
+              <!-- 缓冲进度条 -->
+              <div class="player-buffer" id="playerBufferBar"></div>
+              <!-- 播放进度条 -->
               <div class="player-progress" id="playerProgressBar"></div>
             </div>
           </div>
@@ -74,6 +77,9 @@ export default class Player {
     // 初始化加载状态元素
     this.loadingIndicator = this.container.querySelector('#playerLoading');
     this.errorMessage = null;
+    
+    // 初始化缓冲进度条元素
+    this.bufferBar = this.container.querySelector('#playerBufferBar');
   }
 
   bindEvents() {
@@ -84,6 +90,12 @@ export default class Player {
     this.container.querySelector('#forwardBtn').onclick = () => this.forward5s();
     this.container.querySelector('#loopBtn').onclick = () => this.toggleLoop();
     this.container.querySelector('#playerSpeed').onchange = (e) => this.setSpeed(e.target.value);
+    
+    // 音频缓冲事件
+    this.audio.addEventListener('progress', () => this.updateBufferProgress());
+    
+    // 视频缓冲事件
+    this.video.addEventListener('progress', () => this.updateBufferProgress());
 
     // 进度条点击跳转（支持视频和音频）
     this.container.querySelector('.player-progress-bg').onclick = (e) => {
@@ -345,6 +357,32 @@ export default class Player {
     }
   }
 
+  // 更新缓冲进度
+  updateBufferProgress() {
+    const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
+    if (!item) return;
+    
+    let buffered = 0;
+    let duration = 0;
+    
+    if (item && item.type === 'video' && this.enableVideoPlayback) {
+      if (this.video.buffered.length > 0) {
+        buffered = this.video.buffered.end(this.video.buffered.length - 1);
+      }
+      duration = this.video.duration;
+    } else {
+      if (this.audio.buffered.length > 0) {
+        buffered = this.audio.buffered.end(this.audio.buffered.length - 1);
+      }
+      duration = this.audio.duration;
+    }
+    
+    if (duration > 0) {
+      const percent = (buffered / duration) * 100;
+      this.bufferBar.style.width = percent + '%';
+    }
+  }
+
   updateProgress() {
     const progressBar = this.container.querySelector('#playerProgressBar');
     const playerTime = this.container.querySelector('#playerTime');
@@ -369,6 +407,9 @@ export default class Player {
       progressBar.style.width = '0%';
       playerTime.textContent = '0:00 / 0:00';
     }
+    
+    // 更新缓冲进度
+    this.updateBufferProgress();
   }
 
   updateUI() {
