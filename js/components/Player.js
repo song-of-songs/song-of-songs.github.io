@@ -192,8 +192,34 @@ export default class Player {
       
       // 暂停音频
       this.audio.pause();
+    } else if (item.type === 'video') {
+      // 视频播放功能关闭时，将视频文件作为音频播放
+      // 显示进度条区域
+      this.container.querySelector('.player-progress-area').style.display = 'block';
+      
+      // 重置音频并设置新源
+      this.audio.src = '';
+      this.audio.src = item.file;
+      this.audio.playbackRate = this.speed;
+      this.audio.loop = this.isLoop;
+      
+      // 移除旧的事件监听器
+      this.audio.removeEventListener('canplay', onLoaded);
+      this.audio.removeEventListener('error', onError);
+      
+      // 添加新的事件监听器
+      this.audio.addEventListener('canplay', onLoaded, { once: true });
+      this.audio.addEventListener('error', onError, { once: true });
+      
+      this.audio.play().catch(e => {
+        console.error('音频播放失败:', e);
+        onError();
+      });
+      
+      // 确保视频区域隐藏
+      this.videoArea.style.display = 'none';
     } else {
-      // 播放音频（包括当视频播放功能关闭时）
+      // 播放普通音频文件
       // 显示进度条区域
       this.container.querySelector('.player-progress-area').style.display = 'block';
       
