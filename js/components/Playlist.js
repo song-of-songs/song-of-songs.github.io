@@ -19,6 +19,10 @@ export default class Playlist {
       li.className = idx === this.currentIndex ? 'active' : '';
       li.innerHTML = `<span class="music-title">${item.name}</span>`;
       li.addEventListener('click', () => {
+        // 如果点击的是当前正在播放的歌曲，则忽略
+        if (idx === this.currentIndex) {
+          return;
+        }
         this.currentIndex = idx;
         this.updateActive();
         if (this.player) this.player.play(idx);
