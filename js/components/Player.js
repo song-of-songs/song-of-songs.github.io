@@ -156,6 +156,11 @@ export default class Player {
     this.currentIndex = idx;
     const item = this.musicFiles[idx];
     
+    // 设置播放列表加载状态
+    if (this.playlist && typeof this.playlist.setLoadingIndex === 'function') {
+      this.playlist.setLoadingIndex(idx);
+    }
+    
     // 立即更新UI显示正在加载的歌曲名称
     this.updateUI();
     // 显示加载指示器
@@ -173,6 +178,12 @@ export default class Player {
       this.isPlaying = true;
       this.isLoading = false; // 清除加载状态
       this.updateUI();
+      
+      // 清除播放列表加载状态
+      if (this.playlist && typeof this.playlist.setLoadingIndex === 'function') {
+        this.playlist.setLoadingIndex(-1);
+      }
+      
       this.playlist.setCurrentIndex(idx);
     };
     
@@ -182,6 +193,11 @@ export default class Player {
       this.showError(`加载失败: ${item.name}`);
       this.isPlaying = false;
       this.updateUI();
+      
+      // 清除播放列表加载状态
+      if (this.playlist && typeof this.playlist.setLoadingIndex === 'function') {
+        this.playlist.setLoadingIndex(-1);
+      }
     };
     
     if (this.enableVideoPlayback && item.type === 'video') {

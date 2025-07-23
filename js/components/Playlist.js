@@ -3,20 +3,32 @@ export default class Playlist {
     this.musicFiles = musicFiles;
     this.container = container;
     this.currentIndex = -1;
+    this.loadingIndex = -1; // 新增加载状态索引
     this.player = null;
     this.render();
-    // this.bindEvents();
   }
 
   setPlayer(player) {
     this.player = player;
   }
 
+  // 设置加载状态
+  setLoadingIndex(idx) {
+    this.loadingIndex = idx;
+    this.updateActive();
+  }
+
   render() {
     this.container.innerHTML = '';
     this.musicFiles.forEach((item, idx) => {
       const li = document.createElement('li');
-      li.className = idx === this.currentIndex ? 'active' : '';
+      
+      // 根据状态设置类名
+      let className = '';
+      if (idx === this.currentIndex) className += 'active ';
+      if (idx === this.loadingIndex) className += 'loading';
+      
+      li.className = className.trim();
       li.innerHTML = `<span class="music-title">${item.name}</span>`;
       li.addEventListener('click', () => {
         // 如果点击的是当前正在播放的歌曲，则忽略
@@ -33,7 +45,10 @@ export default class Playlist {
 
   updateActive() {
     Array.from(this.container.children).forEach((li, idx) => {
-      li.className = idx === this.currentIndex ? 'active' : '';
+      let className = '';
+      if (idx === this.currentIndex) className += 'active ';
+      if (idx === this.loadingIndex) className += 'loading';
+      li.className = className.trim();
     });
   }
 

@@ -33,6 +33,12 @@ body {
   color: #ffd700;
   font-weight: bold;
 }
+
+.music-list li.loading {
+  background: #3a3a3c;
+  color: #fe5353; /* 使用与缓冲条相同的颜色 */
+  font-weight: bold;
+}
 .music-list li .play-btn {
   background: none;
   border: none;
