@@ -12,18 +12,30 @@
       background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #1a2a6c 100%);
       color: white;
       font-family: Arial, sans-serif;
-      min-height: 100vh;
+      height: 100vh; /* 使用视口高度 */
+      display: flex;
+      flex-direction: column;
     }
     #app {
       padding: 20px;
+      flex: 1; /* 占据剩余空间 */
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* 防止外部滚动 */
+    }
+    .music-list {
+      flex: 1; /* 列表占据剩余空间 */
+      overflow-y: auto; /* 允许垂直滚动 */
+      padding-top: 10px; /* 顶部间距 */
     }
     .music-list {
       list-style-type: none;
-      padding: 0;
+      /* padding: 0; */
       margin: 0;
+      margin-bottom: 35px;
     }
     .playlist-item {
-      padding: 15px;
+      padding: 12px 15px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
       transition: background-color 0.3s;
