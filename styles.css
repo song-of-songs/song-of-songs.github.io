@@ -74,6 +74,21 @@ body {
   overflow: hidden;
 }
 
+/* 封面图片区域样式 */
+.cover-area {
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  margin-top: 5vh;
+  margin-bottom: 3vh;
+}
+
+.cover-area img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
 .player-title {
   text-align: center;
   color: #fff;
@@ -137,6 +152,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-top: 3vh;
 }
 
 .player-controls-row {
@@ -254,5 +270,19 @@ body {
   
   .player-bar {
     padding: 10px 15px 14px; /* 移动端减少内边距 */
+  }
+  
+  /* 针对移动端调整封面图片间距 */
+  .cover-area {
+    margin-top: 8vh; /* 小屏幕上增加顶部间距 */
+    margin-bottom: 4vh; /* 小屏幕上增加底部间距 */
+  }
+  
+  .player-title {
+    margin-top: 4vh;
+  }
+  
+  .player-controls-area {
+    margin-top: 4vh;
   }
 }

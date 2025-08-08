@@ -20,9 +20,9 @@ export default class Player {
   render() {
     this.container.innerHTML = `
       <div class="player-bar">
-        <!-- 封面图片区域 -->
-        <div id="coverArea" style="text-align: center; margin-bottom: 20px;">
-          <img id="coverImage" src="picFiles/000.png" alt="歌曲封面" style="max-width: 80%; max-height: 300px; border-radius: 8px;">
+        <!-- 封面图片区域（使用CSS类） -->
+        <div class="cover-area">
+          <img id="coverImage" src="picFiles/000.png" alt="歌曲封面">
         </div>
         
         <!-- 加载状态指示器 -->
@@ -35,7 +35,7 @@ export default class Player {
           <video id="playerVideo" style="width: 100%; height: auto; aspect-ratio: 16/9;"></video>
         </div>
         
-        <div class="player-title" id="playerTitle">未在播放</div>
+        <div class="player-title" id="playerTitle" style="margin-top: 3vh;">未在播放</div>
         
         <div class="player-progress-area">
           <div class="player-progress-wrap">
@@ -51,7 +51,7 @@ export default class Player {
           </div>
         </div>
         
-        <div class="player-controls-area">
+        <div class="player-controls-area" style="margin-top: 3vh;">
           <div class="player-controls-row">
             <button id="backwardBtn" class="control-btn"><img src="ico/rewind10.svg" alt="后退10秒"></button>
             <button id="prevBtn" class="control-btn"><img src="ico/prev.svg" alt="上一首"></button>
