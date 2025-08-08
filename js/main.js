@@ -33,9 +33,18 @@ fetch('musicFiles.json')
       const urlParams = new URLSearchParams(window.location.search);
       const trackIndex = parseInt(urlParams.get('index') || 0);
       
-      // 播放指定曲目
-      if (trackIndex >= 0 && trackIndex < musicFiles.length) {
-        player.play(trackIndex);
-      }
+      // 获取覆盖层元素
+      const playOverlay = document.getElementById('playOverlay');
+      
+      // 点击覆盖层后开始播放
+      playOverlay.addEventListener('click', () => {
+        // 移除覆盖层
+        playOverlay.style.display = 'none';
+        
+        // 播放指定曲目
+        if (trackIndex >= 0 && trackIndex < musicFiles.length) {
+          player.play(trackIndex);
+        }
+      });
     }
   });
