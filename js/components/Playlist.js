@@ -20,21 +20,19 @@ export default class Playlist {
 
   render() {
     this.container.innerHTML = '';
-    this.musicFiles.forEach((item, idx) => {
-      const li = document.createElement('li');
-      
-      // 根据状态设置类名
-      let className = '';
-      if (idx === this.currentIndex) className += 'active ';
-      if (idx === this.loadingIndex) className += 'loading';
-      
-      li.className = className.trim();
-      li.innerHTML = `<span class="music-title">${item.name}</span>`;
-      li.addEventListener('click', () => {
-        // 跳转到播放器页面，并传递当前曲目索引
-        window.location.href = `player.html?index=${idx}`;
+    this.musicFiles.forEach((file, index) => {
+      const listItem = document.createElement('li');
+      listItem.className = 'playlist-item';
+      listItem.innerHTML = `
+        <div class="song-title">${file.name || file.title || '未知歌曲'}</div>
+      `;
+
+      listItem.addEventListener('click', () => {
+        // 跳转到播放器页面并传递歌曲索引
+        window.location.href = `player.html?song=${index}`;
       });
-      this.container.appendChild(li);
+
+      this.container.appendChild(listItem);
     });
   }
 

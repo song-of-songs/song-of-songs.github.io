@@ -29,22 +29,21 @@ fetch('musicFiles.json')
       const playerBar = document.getElementById('playerBar');
       const player = new Player(musicFiles, playerBar, null);
       
-      // 解析URL参数获取曲目索引
-      const urlParams = new URLSearchParams(window.location.search);
-      const trackIndex = parseInt(urlParams.get('index') || 0);
-      
-      // 获取覆盖层元素
-      const playOverlay = document.getElementById('playOverlay');
-      
-      // 点击覆盖层后开始播放
-      playOverlay.addEventListener('click', () => {
-        // 移除覆盖层
-        playOverlay.style.display = 'none';
-        
-        // 播放指定曲目
-        if (trackIndex >= 0 && trackIndex < musicFiles.length) {
-          player.play(trackIndex);
+      // 添加对playSong事件的监听
+      window.addEventListener('playSong', (e) => {
+        const songIndex = e.detail;
+        if (songIndex >= 0 && songIndex < musicFiles.length) {
+          player.play(songIndex);
         }
       });
+      
+      // 解析URL参数获取曲目索引
+      const urlParams = new URLSearchParams(window.location.search);
+      const songIndex = parseInt(urlParams.get('song') || 0);
+      
+      // 如果URL中有歌曲索引，立即触发播放
+      if (!isNaN(songIndex)) {
+        window.dispatchEvent(new CustomEvent('playSong', { detail: songIndex }));
+      }
     }
   });
