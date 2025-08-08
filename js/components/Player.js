@@ -20,6 +20,11 @@ export default class Player {
   render() {
     this.container.innerHTML = `
       <div class="player-bar">
+        <!-- 封面图片区域 -->
+        <div id="coverArea" style="text-align: center; margin-bottom: 20px;">
+          <img id="coverImage" src="picFiles/000.png" alt="歌曲封面" style="max-width: 80%; max-height: 300px; border-radius: 8px;">
+        </div>
+        
         <!-- 加载状态指示器 -->
         <div id="playerLoading" style="display: none; text-align: center; padding: 10px; color: #e0e0e0;">
           加载中...
@@ -155,6 +160,9 @@ export default class Player {
     
     this.currentIndex = idx;
     const item = this.musicFiles[idx];
+    
+    // 更新封面图片
+    this.updateCover(item.name);
     
     // 设置播放列表加载状态
     if (this.playlist && typeof this.playlist.setLoadingIndex === 'function') {
@@ -433,6 +441,23 @@ export default class Player {
     
     // 更新缓冲进度
     this.updateBufferProgress();
+  }
+
+  updateCover(songName) {
+    const coverImage = this.container.querySelector('#coverImage');
+    if (!coverImage) return;
+    
+    // 移除文件扩展名（如果有）
+    const cleanSongName = songName.replace(/\.[^/.]+$/, "");
+    
+    // 尝试加载匹配的封面图片
+    coverImage.src = `picFiles/${cleanSongName}.png`;
+    
+    // 设置错误处理：如果图片加载失败，使用默认图片
+    coverImage.onerror = () => {
+      coverImage.src = 'picFiles/000.png';
+      coverImage.onerror = null; // 防止循环错误
+    };
   }
 
   updateUI() {
