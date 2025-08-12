@@ -1,0 +1,8 @@
+
+<!-- 关闭按钮 exit.svg -->
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(14.5,-7.5) rotate(45,0,0)">
+    <rect x="14.75" y="2" width="3" height="25" rx="1.5" fill="#444"/>
+    <rect x="4" y="12.8" width="25" height="3" rx="1.5" fill="#444"/>
+  </g>
+</svg>
