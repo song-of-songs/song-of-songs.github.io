@@ -59,9 +59,19 @@ body::before {
 }
 
 .music-list li.active {
-  background: #3a3a3c;
+  background: rgba(255, 215, 0, 0.1);
   color: #ffd700;
   font-weight: bold;
+  border-left: 2px solid #ffd700;
+  position: relative;
+}
+
+.music-list li.active::before {
+  content: "▶";
+  position: absolute;
+  left: 8px;
+  color: #ffd700;
+  font-size: 14px;
 }
 
 .music-list li.loading {
@@ -234,8 +244,24 @@ body::before {
   transform: translateY(100%);
   transition: transform 0.3s ease;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* 移动端平滑滚动 */
-  overscroll-behavior: contain; /* 防止滚动穿透 */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist-header {
+  flex-shrink: 0;
+  padding: 16px;
+  background: #2c2c2e;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.music-list {
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .playlist-overlay.visible .playlist-container {

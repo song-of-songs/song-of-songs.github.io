@@ -99,6 +99,19 @@ export default class Playlist {
     this.overlay.style.display = 'block';
     setTimeout(() => {
       this.overlay.classList.add('visible');
+      // 清除之前的高亮
+      const previousActive = this.overlay.querySelector('.music-list li.active');
+      if (previousActive) {
+        previousActive.classList.remove('active');
+      }
+      // 高亮当前播放歌曲
+      if (this.player && this.player.currentIndex >= 0) {
+        const activeItem = this.overlay.querySelector('.music-list').children[this.player.currentIndex];
+        if (activeItem) {
+          activeItem.classList.add('active');
+          activeItem.scrollIntoView({block: 'center', behavior: 'smooth'});
+        }
+      }
     }, 10);
   }
 
@@ -121,5 +134,19 @@ export default class Playlist {
   setCurrentIndex(idx) {
     this.currentIndex = idx;
     this.updateActive();
+    // 更新播放列表中的高亮状态
+    if (this.isVisible && this.overlay) {
+      const previousActive = this.overlay.querySelector('.music-list li.active');
+      if (previousActive) {
+        previousActive.classList.remove('active');
+      }
+      if (idx >= 0) {
+        const activeItem = this.overlay.querySelector(`.music-list li:nth-child(${idx + 1})`);
+        if (activeItem) {
+          activeItem.classList.add('active');
+          activeItem.scrollIntoView({block: 'center', behavior: 'smooth'});
+        }
+      }
+    }
   }
 }
