@@ -67,11 +67,19 @@ body::before {
 }
 
 .music-list li.active::before {
-  content: "▶";
+  content: "";
   position: absolute;
-  left: 8px;
-  color: #ffd700;
-  font-size: 14px;
+  left: -6px;
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-image: url('ico/play.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: invert(79%) sepia(61%) saturate(427%) hue-rotate(358deg) brightness(102%) contrast(101%);
+  padding-left: 12px;
+  box-sizing: border-box;
 }
 
 .music-list li.loading {
