@@ -41,8 +41,15 @@
     const urlParams = new URLSearchParams(window.location.search);
     const songIndex = parseInt(urlParams.get('song'));
     
+    // 隐藏初始提示
+    document.getElementById('playPre').style.display = 'none';
+    
+    // 显示播放覆盖层
+    const playOverlay = document.getElementById('playOverlay');
+    playOverlay.style.display = 'flex';
+    
     if (!isNaN(songIndex)) {
-      document.getElementById('playOverlay').addEventListener('click', function() {
+      playOverlay.addEventListener('click', function() {
         // 触发播放
         window.dispatchEvent(new CustomEvent('playSong', { detail: songIndex }));
         // 移除覆盖层

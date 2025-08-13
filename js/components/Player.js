@@ -38,7 +38,12 @@ export default class Player {
           <video id="playerVideo" style="width: 100%; height: auto; aspect-ratio: 16/9;"></video>
         </div>
         
-        <div class="player-title" id="playerTitle" style="margin-top: 3vh;">未在播放</div>
+        <div class="player-title-wrap">
+          <div class="player-title" id="playerTitle">未在播放</div>
+          <button id="playlistBtn" class="playlist-btn">
+            <img src="ico/list.svg" alt="播放列表">
+          </button>
+        </div>
         
         <div class="player-progress-area">
           <div class="player-progress-wrap">
@@ -132,6 +137,13 @@ export default class Player {
       e.preventDefault();
     }, { passive: false });
     
+    // 添加播放列表按钮点击事件
+    this.container.querySelector('#playlistBtn').addEventListener('click', () => {
+      if (this.playlist) {
+        this.playlist.show();
+      }
+    });
+
     // 为所有交互元素添加额外的触摸事件阻止（确保事件不会冒泡到父元素）
     const interactiveElements = this.container.querySelectorAll('button, .player-progress-bg, .speed-select');
     interactiveElements.forEach(el => {
@@ -479,12 +491,26 @@ export default class Player {
     // 歌名
     const title = this.container.querySelector('#playerTitle');
     
+    // 确保有span元素
+    if (!title.querySelector('span')) {
+      title.innerHTML = '<span></span>';
+    }
+    const titleSpan = title.querySelector('span');
+    
     if (this.isLoading && this.currentIndex !== -1) {
       // 显示正在加载状态
-      title.textContent = `${this.musicFiles[this.currentIndex].name} (正在加载···)`;
+      titleSpan.textContent = `${this.musicFiles[this.currentIndex].name} (正在加载···)`;
     } else {
-      title.textContent = this.currentIndex === -1 ? '未在播放' : this.musicFiles[this.currentIndex].name;
+      titleSpan.textContent = this.currentIndex === -1 ? '未在播放' : this.musicFiles[this.currentIndex].name;
     }
+
+    // 检测是否需要滚动
+    title.classList.remove('scrollable');
+    setTimeout(() => {
+      if (titleSpan.scrollWidth > title.clientWidth) {
+        title.classList.add('scrollable');
+      }
+    }, 100);
     
     // 如果当前没有在加载，但歌曲正在播放，则显示正常状态
     if (!this.isLoading && this.currentIndex !== -1 && this.isPlaying) {

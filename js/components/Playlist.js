@@ -3,16 +3,17 @@ export default class Playlist {
     this.musicFiles = musicFiles;
     this.container = container;
     this.currentIndex = -1;
-    this.loadingIndex = -1; // 新增加载状态索引
+    this.loadingIndex = -1;
     this.player = null;
+    this.isVisible = false;
     this.render();
+    this.renderOverlay();
   }
 
   setPlayer(player) {
     this.player = player;
   }
 
-  // 设置加载状态
   setLoadingIndex(idx) {
     this.loadingIndex = idx;
     this.updateActive();
@@ -25,17 +26,63 @@ export default class Playlist {
       listItem.className = 'playlist-item';
       listItem.innerHTML = `
         <div class="song-title">${file.name || file.title || '未知歌曲'}</div>
+        ${file.artist ? `<div class="song-artist">${file.artist}</div>` : ''}
       `;
 
       listItem.addEventListener('click', () => {
-        // 跳转到播放器页面并传递歌曲索引
-        window.location.href = `player.html?song=${index}`;
+        if (this.player) {
+          this.player.play(index);
+          this.hide();
+        }
       });
 
       this.container.appendChild(listItem);
     });
   }
 
+  renderOverlay() {
+    this.overlay = document.createElement('div');
+    this.overlay.className = 'playlist-overlay';
+    this.overlay.style.display = 'none';
+    this.overlay.innerHTML = `
+      <div class="playlist-container">
+        <div class="playlist-header">
+          <h3>播放列表</h3>
+          <button class="close-btn">
+            <img src="ico/exit.svg" alt="关闭">
+          </button>
+        </div>
+        <ul class="music-list"></ul>
+      </div>
+    `;
+    document.body.appendChild(this.overlay);
+
+    this.overlay.querySelector('.close-btn').addEventListener('click', () => {
+      this.hide();
+    });
+
+    this.overlay.addEventListener('click', (e) => {
+      if (e.target === this.overlay) {
+        this.hide();
+      }
+    });
+  }
+
+  show() {
+    this.isVisible = true;
+    this.overlay.style.display = 'block';
+    setTimeout(() => {
+      this.overlay.classList.add('visible');
+    }, 10);
+  }
+
+  hide() {
+    this.isVisible = false;
+    this.overlay.classList.remove('visible');
+    setTimeout(() => {
+      this.overlay.style.display = 'none';
+    }, 300);
+  }
   updateActive() {
     Array.from(this.container.children).forEach((li, idx) => {
       let className = '';

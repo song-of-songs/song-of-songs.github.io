@@ -60,5 +60,17 @@
     <ul class="music-list" id="musicList"></ul>
   </div>
   <script type="module" src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const musicList = document.getElementById('musicList');
+      musicList.addEventListener('click', (e) => {
+        const item = e.target.closest('.playlist-item');
+        if (item) {
+          const index = Array.from(musicList.children).indexOf(item);
+          window.location.href = `player.html?song=${index}`;
+        }
+      });
+    });
+  </script>
 </body>
 </html>

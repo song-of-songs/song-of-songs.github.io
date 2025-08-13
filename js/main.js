@@ -25,9 +25,17 @@ fetch('musicFiles.json')
       const playlist = new Playlist(musicFiles, document.getElementById('musicList'));
     } 
     else if (path.includes('player.html')) {
-      // 播放器页：初始化播放器
+      // 播放器页：初始化播放器和播放列表
       const playerBar = document.getElementById('playerBar');
-      const player = new Player(musicFiles, playerBar, null);
+      const playlistContainer = document.createElement('div');
+      playlistContainer.id = 'playlistContainer';
+      document.body.appendChild(playlistContainer);
+      
+      const playlist = new Playlist(musicFiles, playlistContainer);
+      const player = new Player(musicFiles, playerBar, playlist);
+      
+      // 设置播放列表的播放器引用
+      playlist.setPlayer(player);
       
       // 添加对playSong事件的监听
       window.addEventListener('playSong', (e) => {
