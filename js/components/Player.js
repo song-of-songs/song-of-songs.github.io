@@ -27,7 +27,10 @@ export default class Player {
         
         <!-- 加载状态指示器 -->
         <div id="playerLoading" style="display: none; text-align: center; padding: 10px; color: #e0e0e0;">
-          加载中...
+          加载中
+        </div>
+        <div id="playerPlaying" style="display: none; text-align: center; padding: 10px; color: #e0e0e0;">
+          播放中
         </div>
         
         <!-- 视频播放区域 -->
@@ -80,6 +83,7 @@ export default class Player {
     
     // 初始化加载状态元素
     this.loadingIndicator = this.container.querySelector('#playerLoading');
+    this.playingIndicator = this.container.querySelector('#playerPlaying');
     this.errorMessage = null;
     
     // 初始化缓冲进度条元素
@@ -181,6 +185,7 @@ export default class Player {
     // 设置加载完成后的回调
     const onLoaded = () => {
       this.loadingIndicator.style.display = 'none';
+      this.playingIndicator.style.display = 'block'; // 显示播放中指示器
       this.isPlaying = true;
       this.isLoading = false; // 清除加载状态
       this.updateUI();
@@ -467,7 +472,7 @@ export default class Player {
     
     if (this.isLoading && this.currentIndex !== -1) {
       // 显示正在加载状态
-      title.textContent = `${this.musicFiles[this.currentIndex].name} (正在加载...)`;
+      title.textContent = `${this.musicFiles[this.currentIndex].name} (正在加载···)`;
     } else {
       title.textContent = this.currentIndex === -1 ? '未在播放' : this.musicFiles[this.currentIndex].name;
     }
