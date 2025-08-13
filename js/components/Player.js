@@ -47,7 +47,8 @@ export default class Player {
             </div>
           </div>
           <div class="player-time-wrap">
-            <span id="playerTime" class="player-time">0:00 / 0:00</span>
+            <span id="playerTimeStart" class="player-time">0:00</span>
+            <span id="playerTimeEnd" class="player-time">0:00</span>
           </div>
         </div>
         
@@ -413,7 +414,8 @@ export default class Player {
 
   updateProgress() {
     const progressBar = this.container.querySelector('#playerProgressBar');
-    const playerTime = this.container.querySelector('#playerTime');
+    const playerTimeStart = this.container.querySelector('#playerTimeStart');
+    const playerTimeEnd = this.container.querySelector('#playerTimeEnd');
     
     const item = this.currentIndex >= 0 ? this.musicFiles[this.currentIndex] : null;
     let currentTime = 0;
@@ -430,10 +432,12 @@ export default class Player {
     if (duration) {
       const percent = (currentTime / duration) * 100;
       progressBar.style.width = percent + '%';
-      playerTime.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+      playerTimeStart.textContent = formatTime(currentTime);
+      playerTimeEnd.textContent = formatTime(duration);
     } else {
       progressBar.style.width = '0%';
-      playerTime.textContent = '0:00 / 0:00';
+      playerTimeStart.textContent = '0:00';
+      playerTimeEnd.textContent = '0:00';
     }
     
     // 更新缓冲进度
