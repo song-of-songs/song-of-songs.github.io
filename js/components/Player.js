@@ -166,6 +166,11 @@ export default class Player {
   play(idx) {
     if (idx < 0 || idx >= this.musicFiles.length) return;
     
+    // 更新URL参数
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set('song', idx);
+    window.history.pushState({}, '', newUrl);
+    
     // 清除之前的错误信息
     if (this.errorMessage) {
       this.errorMessage.remove();

@@ -32,6 +32,10 @@ export default class Playlist {
         if (this.player) {
           this.player.play(index);
           this.hide();
+          // 更新URL参数
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.set('song', index);
+          window.history.pushState({}, '', newUrl);
         }
       });
 
@@ -69,6 +73,10 @@ export default class Playlist {
         if (this.player) {
           this.player.play(index);
           this.hide();
+          // 更新URL参数
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.set('song', index);
+          window.history.pushState({}, '', newUrl);
         }
       });
 
