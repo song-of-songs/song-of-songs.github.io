@@ -510,16 +510,29 @@ export default class Player {
       titleSpan.textContent = this.currentIndex === -1 ? '未在播放' : this.musicFiles[this.currentIndex].name;
     }
 
-    // 检测是否需要滚动
-    title.classList.remove('scrollable');
-    setTimeout(() => {
-      if (titleSpan.scrollWidth > title.clientWidth) {
-        title.classList.add('scrollable');
-      }
-    }, 100);
+    // 强制启用滚动效果
+    title.classList.add('scrollable');
+    title.style.overflow = 'hidden';
+    title.style.whiteSpace = 'nowrap';
+    title.style.width = '100%';
+    
+    titleSpan.style.display = 'inline-block';
+    titleSpan.style.paddingLeft = '100%';
+    titleSpan.style.animation = 'scrollText 5s linear infinite';
+    titleSpan.style.animationPlayState = 'running';
+    titleSpan.style.willChange = 'transform';
+    
+    // 强制重绘以触发动画
+    void titleSpan.offsetWidth;
+    
+    // 确保动画在播放/暂停时继续运行
+    titleSpan.style.animation = 'none';
+    void titleSpan.offsetWidth;
+    titleSpan.style.animation = 'scrollText 5s linear infinite';
+    titleSpan.style.animationPlayState = 'running';
     
     // 如果当前没有在加载，但歌曲正在播放，则显示正常状态
-    if (!this.isLoading && this.currentIndex !== -1 && this.isPlaying) {
+    if (!this.isLoading && this.currentIndex !== -1) {
       title.textContent = this.musicFiles[this.currentIndex].name;
     }
     // 播放/暂停图标
