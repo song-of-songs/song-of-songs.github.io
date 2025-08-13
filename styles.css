@@ -160,6 +160,8 @@ body {
   justify-content: center;
   align-items: center;
   gap: 20px;
+  margin-top: -20px; /* 调整顶部间距 */
+  margin-bottom: 20px; /* 调整底部间距 */
 }
 
 .control-btn {

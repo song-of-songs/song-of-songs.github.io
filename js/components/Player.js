@@ -53,17 +53,14 @@ export default class Player {
         
         <div class="player-controls-area" style="margin-top: 3vh;">
           <div class="player-controls-row">
+            <button id="loopBtn" class="control-btn secondary-btn">
+              <img src="ico/loop.svg" alt="循环">
+            </button>
             <button id="backwardBtn" class="control-btn"><img src="ico/rewind10.svg" alt="后退10秒"></button>
             <button id="prevBtn" class="control-btn"><img src="ico/prev.svg" alt="上一首"></button>
             <button id="playPauseBtn" class="control-btn main-btn"><img id="playPauseIcon" src="ico/play.svg" alt="播放"></button>
             <button id="nextBtn" class="control-btn"><img src="ico/next.svg" alt="下一首"></button>
             <button id="forwardBtn" class="control-btn"><img src="ico/forward5.svg" alt="快进5秒"></button>
-          </div>
-          
-          <div class="player-controls-row">
-            <button id="loopBtn" class="control-btn secondary-btn">
-              <img src="ico/loop.svg" alt="循环">
-            </button>
             <select id="playerSpeed" class="speed-select secondary-btn">
               <option value="0.5">x0.5</option>
               <option value="1" selected>x1</option>
