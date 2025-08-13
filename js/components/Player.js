@@ -191,8 +191,9 @@ export default class Player {
     // 立即更新UI显示正在加载的歌曲名称
     this.updateUI();
     
-    // 显示加载指示器
+    // 显示加载指示器 & 隐藏播放中指示器
     this.loadingIndicator.style.display = 'block';
+    this.playingIndicator.style.display = 'none'; // 隐藏播放中指示器
     
     // 设置临时加载状态
     this.isLoading = true;

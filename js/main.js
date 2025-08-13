@@ -53,7 +53,7 @@ fetch('musicFiles.json')
       const playPre = document.getElementById('playPre');
       playPre.style.display = 'none'; // 隐藏播放前提示
 
-      // 初始化：显示透明覆盖层 playPre
+      // 初始化：显示透明覆盖层
       const playOverlay = document.getElementById('playOverlay');
       playOverlay.style.display = 'block'; // 显示透明覆盖层
       playOverlay.style.position = "fixed ";
