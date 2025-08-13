@@ -26,7 +26,6 @@ export default class Playlist {
       listItem.className = 'playlist-item';
       listItem.innerHTML = `
         <div class="song-title">${file.name || file.title || '未知歌曲'}</div>
-        ${file.artist ? `<div class="song-artist">${file.artist}</div>` : ''}
       `;
 
       listItem.addEventListener('click', () => {
@@ -56,6 +55,25 @@ export default class Playlist {
       </div>
     `;
     document.body.appendChild(this.overlay);
+
+    // 渲染歌曲列表
+    const musicList = this.overlay.querySelector('.music-list');
+    this.musicFiles.forEach((file, index) => {
+      const listItem = document.createElement('li');
+      listItem.className = 'playlist-item';
+      listItem.innerHTML = `
+        <div class="song-title">${file.name || file.title || '未知歌曲'}</div>
+      `;
+
+      listItem.addEventListener('click', () => {
+        if (this.player) {
+          this.player.play(index);
+          this.hide();
+        }
+      });
+
+      musicList.appendChild(listItem);
+    });
 
     this.overlay.querySelector('.close-btn').addEventListener('click', () => {
       this.hide();
