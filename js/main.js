@@ -40,10 +40,35 @@ fetch('musicFiles.json')
       // 解析URL参数获取曲目索引
       const urlParams = new URLSearchParams(window.location.search);
       const songIndex = parseInt(urlParams.get('song') || 0);
+
+      // 初始化：隐藏播放前提示
+      const playPre = document.getElementById('playPre');
+      playPre.style.display = 'none'; // 隐藏播放前提示
+
+      // 初始化：显示透明覆盖层 playPre
+      const playOverlay = document.getElementById('playOverlay');
+      playOverlay.style.display = 'block'; // 显示透明覆盖层
+      playOverlay.style.position = "fixed ";
+      playOverlay.style.top = " 0 ";
+      playOverlay.style.left = " 0 ";
+      playOverlay.style.width = " 100% ";
+      playOverlay.style.height = " 100% ";
+      playOverlay.style.background = " rgba(0,0,0,0.01) ";
+      playOverlay.style.zIndex = " 1000 ";
+      playOverlay.style.cursor = " pointer ";
+      playOverlay.style.display = " flex ";
+      playOverlay.style.justifyContent = "center";
+      playOverlay.style.alignItems = "center"; 
+      playOverlay.style.color = "white";
+      playOverlay.style.fontSize = "24px";
+
+      // 初始化：显示加载状态指示器
+      const loadingBar = document.getElementById('playerLoading');
+      loadingBar.style.display = 'block'; // 显示加载状态指示器
       
       // 如果URL中有歌曲索引，立即触发播放
-      if (!isNaN(songIndex)) {
-        window.dispatchEvent(new CustomEvent('playSong', { detail: songIndex }));
-      }
+      // if (!isNaN(songIndex)) {
+      //   window.dispatchEvent(new CustomEvent('playSong', { detail: songIndex }));
+      // }
     }
   });

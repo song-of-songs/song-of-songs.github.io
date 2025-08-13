@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>音乐播放器</title>
+  <title>For U</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     body, html {
@@ -20,8 +20,14 @@
   </style>
 </head>
 <body>
+
+  <!-- 初始页面提示语 -->
+  <div id="playPre" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.01); z-index: 1000; cursor: pointer; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px;">
+    马上播放，请稍候 ···
+  </div>
+
   <!-- 透明覆盖层，用于捕获首次点击 -->
-  <div id="playOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.01); z-index: 1000; cursor: pointer; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px;">
+  <div id="playOverlay" style="display: none;">
     点击任意位置开始播放
   </div>
   

@@ -173,6 +173,7 @@ export default class Player {
     
     // 立即更新UI显示正在加载的歌曲名称
     this.updateUI();
+    
     // 显示加载指示器
     this.loadingIndicator.style.display = 'block';
     
