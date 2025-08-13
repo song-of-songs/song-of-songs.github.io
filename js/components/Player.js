@@ -461,7 +461,15 @@ export default class Player {
     
     // 设置错误处理：如果图片加载失败，使用默认图片
     coverImage.onerror = () => {
-      coverImage.src = 'picFiles/000.png';
+      if (coverImage.src !== `picFiles/${cleanSongName}.jpg`) {
+        coverImage.src = `picFiles/${cleanSongName}.jpg`; // 使用其它格式尝试加载
+      }
+      
+      if( coverImage.src !== `picFiles/${cleanSongName}.png` && coverImage.src !== `picFiles/${cleanSongName}.jpg`) {
+        // 如果所有尝试都失败，使用默认封面图片
+        console.warn(`未找到封面图片: ${cleanSongName}`);
+        coverImage.src = 'picFiles/000.png';
+      }
       coverImage.onerror = null; // 防止循环错误
     };
   }
