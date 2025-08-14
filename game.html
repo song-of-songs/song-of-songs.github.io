@@ -215,10 +215,10 @@
         <div class="card">
             <h1>趣味问题集</h1>
             <div id="question-display">
-                <div class="placeholder">请输入1-42的数字查看问题</div>
+                <div class="placeholder">请输入1-22的数字查看问题</div>
             </div>
             <div class="input-group">
-                <input type="text" id="question-input" placeholder="输入数字 (1-42)" autofocus>
+                <input type="text" id="question-input" placeholder="输入数字 (1-22)" autofocus>
                 <button id="show-btn">显示问题</button>
             </div>
             <div class="actions">
@@ -285,7 +285,7 @@
         // 重置界面
         function resetInterface() {
             questionInput.value = '';
-            questionDisplay.innerHTML = '<div class="placeholder">请输入1-42的数字查看问题</div>';
+            questionDisplay.innerHTML = '<div class="placeholder">请输入1-22的数字查看问题</div>';
             exitMessage.classList.remove('show');
             questionInput.disabled = false;
             showBtn.disabled = false;
