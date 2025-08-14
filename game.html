@@ -161,6 +161,25 @@
             color: var(--dark);
         }
 
+        /* 全屏按钮样式 */
+        #fullscreen-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        #fullscreen-btn:hover {
+            background: var(--secondary);
+        }
+
         /* 响应式设计 */
         @media (max-width: 768px) {
             .card {
@@ -310,6 +329,28 @@
         randomBtn.addEventListener('click', showRandomQuestion);
 
         resetBtn.addEventListener('click', resetInterface);
+
+        // 全屏按钮功能
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.id = 'fullscreen-btn';
+        fullscreenBtn.textContent = '全屏';
+        document.body.appendChild(fullscreenBtn);
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`全屏错误: ${err.message}`);
+                });
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fullscreenBtn.style.display = 'none';
+            } else {
+                fullscreenBtn.style.display = 'block';
+            }
+        });
 
         // 初始聚焦输入框
         questionInput.focus();
