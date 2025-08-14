@@ -1,50 +1,84 @@
-// 全屏功能实现
+// 幻灯片和全屏功能实现
 document.addEventListener('DOMContentLoaded', function() {
-    // 创建全屏按钮
-    const fullscreenBtn = document.createElement('button');
-    fullscreenBtn.className = 'fullscreen-btn';
-    fullscreenBtn.innerHTML = '⛶';
-    fullscreenBtn.title = '全屏显示';
-    document.body.appendChild(fullscreenBtn);
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const fullscreenBtn = document.querySelector('.fullscreen-btn');
+    let currentSlide = 0;
+
+    // 初始化显示第一张幻灯片
+    showSlide(currentSlide);
+
+    // 上一张幻灯片
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // 下一张幻灯片
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // 显示指定幻灯片
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+    }
 
     // 全屏切换函数
     function toggleFullscreen() {
         if (!document.fullscreenElement) {
-            // 进入全屏
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
             } else if (document.documentElement.webkitRequestFullscreen) {
                 document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
             }
-            fullscreenBtn.innerHTML = '⛶';
         } else {
-            // 退出全屏
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             } else if (document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
             }
-            fullscreenBtn.innerHTML = '⛶';
         }
     }
 
-    // 添加点击事件
+    // 添加事件监听
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
     fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-    // 监听全屏变化
-    document.addEventListener('fullscreenchange', updateButton);
-    document.addEventListener('webkitfullscreenchange', updateButton);
-    document.addEventListener('msfullscreenchange', updateButton);
+    // 键盘导航
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+        } else if (e.key === 'f') {
+            toggleFullscreen();
+        }
+    });
 
-    function updateButton() {
-        if (document.fullscreenElement) {
-            fullscreenBtn.innerHTML = '⛶';
-        } else {
-            fullscreenBtn.innerHTML = '⛶';
+    // 触摸滑动支持
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) {
+            nextSlide();
+        } else if (touchEndX > touchStartX + 50) {
+            prevSlide();
         }
     }
 });

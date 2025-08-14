@@ -1,52 +1,97 @@
-/* 全屏按钮样式 */
+/* PPT样式 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+    overflow: hidden;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.slide.active {
+    display: flex;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+}
+
+p, li {
+    font-size: 2.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* 导航按钮 */
+.nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(52, 152, 219, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: rgba(41, 128, 185, 0.9);
+}
+
+#prev-btn {
+    left: 20px;
+}
+
+#next-btn {
+    right: 20px;
+}
+
+/* 全屏按钮 */
 .fullscreen-btn {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #3498db;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(52, 152, 219, 0.7);
     color: white;
     border: none;
+    border-radius: 50%;
+    font-size: 2rem;
     cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    transition: all 0.3s ease;
-    z-index: 1000;
+    z-index: 100;
+    transition: all 0.3s;
 }
 
 .fullscreen-btn:hover {
-    background-color: #2980b9;
-    transform: scale(1.1);
+    background-color: rgba(41, 128, 185, 0.9);
 }
 
-.fullscreen-btn:active {
-    transform: scale(0.95);
-}
-
-/* 全屏状态下的样式 */
-:fullscreen .fullscreen-btn,
-:-webkit-full-screen .fullscreen-btn,
-:-moz-full-screen .fullscreen-btn {
-    opacity: 0.7;
-}
-
-/* 基础样式 */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    transition: background-color 0.3s;
-}
-
-/* 全屏时的背景色 */
-:fullscreen body {
-    background-color: #f8f9fa;
-    padding: 40px;
+/* 全屏状态 */
+:fullscreen .slide {
+    padding: 60px;
 }
