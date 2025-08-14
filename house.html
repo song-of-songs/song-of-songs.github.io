@@ -13,11 +13,15 @@
         .temple-container {
             display: flex;
             flex-direction: column;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             background-color: white;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .diagram-section {
+            margin: 30px auto;
+            max-width: 800px;
         }
         .temple-title {
             text-align: center;
@@ -124,11 +128,14 @@
 </head>
 <body>
     <div class="temple-container">
-        <h1 class="temple-title">所罗门圣殿展开图</h1>
-        <div class="temple-layout">
+        <h1 class="temple-title">所罗门圣殿结构图</h1>
+        
+        <div class="diagram-section">
+            <h2 style="text-align: center; color: #8B4513;">展开图</h2>
+            <div class="temple-layout">
             <div class="door">外院门</div>
             <div class="outer-court">
-                <div class="area-label">外院</div>
+                <div class="area-label">外院(以色列院)</div>
                 <div class="item bronze-altar" style="top: 40px; left: 50px;">
                     铜祭坛
                     <div class="tooltip">铜祭坛 - 用于献祭动物，象征赎罪</div>
@@ -137,6 +144,10 @@
                     洗濯盆
                     <div class="tooltip">洗濯盆 - 祭司在此洗手洗脚，象征洁净</div>
                 </div>
+            </div>
+            <div class="door">内院门</div>
+            <div class="inner-court" style="background-color: #E6D8AD; height: 150px; border: 2px solid #8B4513; padding: 15px; position: relative; min-width: 200px;">
+                <div class="area-label">内院(祭司院)</div>
             </div>
             <div class="door">圣所门</div>
             <div class="holy-place">
@@ -162,9 +173,54 @@
                     <div class="tooltip">约柜 - 存放十诫法版，象征神的约和同在</div>
                 </div>
             </div>
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <p>鼠标悬停在物品上查看详细信息</p>
+            </div>
         </div>
-        <div style="margin-top: 20px; text-align: center;">
-            <p>鼠标悬停在物品上查看详细信息</p>
+
+        <div class="diagram-section">
+            <h2 style="text-align: center; color: #8B4513;">俯瞰图</h2>
+            <div class="overview-container" style="margin: 0 auto;">
+            <div style="position: relative; height: 300px; border: 2px solid #8B4513;">
+                <!-- 外院 -->
+                <div style="position: absolute; top: 20px; left: 20px; width: 560px; height: 260px; 
+                    background-color: #F5DEB3; border: 1px solid #8B4513;">
+                    <div style="position: absolute; top: 5px; left: 5px; font-weight: bold; color: #8B4513;">外院(以色列院)</div>
+                    <!-- 内院 -->
+                    <div style="position: absolute; top: 80px; left: 150px; width: 300px; height: 120px; 
+                        background-color: #E6D8AD; border: 1px solid #8B4513;">
+                        <div style="position: absolute; top: 5px; left: 5px; font-weight: bold; color: #8B4513;">内院(祭司院)</div>
+                    </div>
+                    <div style="position: absolute; top: 30px; left: 100px; width: 60px; height: 40px; 
+                        background-color: #CD7F32; display: flex; align-items: center; justify-content: center;">铜祭坛</div>
+                    <div style="position: absolute; top: 30px; left: 200px; width: 60px; height: 40px; 
+                        background-color: #4682B4; display: flex; align-items: center; justify-content: center;">洗濯盆</div>
+                </div>
+
+                <!-- 圣所 -->
+                <div style="position: absolute; top: 100px; left: 200px; width: 200px; height: 100px; 
+                    background-color: #FFD700; border: 1px solid #8B4513;">
+                    <div style="position: absolute; top: 5px; left: 5px; font-weight: bold; color: #8B4513;">圣所</div>
+                </div>
+
+                <!-- 至圣所 -->
+                <div style="position: absolute; top: 100px; left: 300px; width: 100px; height: 100px; 
+                    background-color: #DAA520; border: 1px solid #8B4513;">
+                    <div style="position: absolute; top: 5px; left: 5px; font-weight: bold; color: #8B4513;">至圣所</div>
+                </div>
+
+                <!-- 门标记 -->
+                <div style="position: absolute; top: 140px; left: 20px; width: 30px; height: 20px; 
+                    background-color: #8B4513; color: white; display: flex; align-items: center; justify-content: center;">门</div>
+                <div style="position: absolute; top: 140px; left: 180px; width: 20px; height: 20px; 
+                    background-color: #8B4513; color: white; display: flex; align-items: center; justify-content: center;">门</div>
+                <div style="position: absolute; top: 140px; left: 280px; width: 20px; height: 20px; 
+                    background-color: #8B4513; color: white; display: flex; align-items: center; justify-content: center;">门</div>
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <p>圣殿俯瞰图展示了整体布局和比例关系</p>
+            </div>
         </div>
     </div>
 </body>
