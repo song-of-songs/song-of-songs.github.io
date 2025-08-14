@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>所罗门圣殿展开图</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .temple-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .temple-title {
+            text-align: center;
+            color: #8B4513;
+            margin-bottom: 20px;
+        }
+        .temple-layout {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            align-items: center;
+        }
+        .outer-court, .holy-place, .most-holy-place {
+            border: 2px solid #8B4513;
+            padding: 15px;
+            position: relative;
+            min-width: 200px;
+        }
+        .area-label {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+        .door {
+            width: 30px;
+            height: 60px;
+            background-color: #8B4513;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .outer-court {
+            background-color: #F5DEB3;
+            height: 150px;
+        }
+        .holy-place {
+            background-color: #FFD700;
+            height: 200px;
+        }
+        .most-holy-place {
+            background-color: #DAA520;
+            height: 150px;
+        }
+        .item {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .item:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            visibility: hidden;
+            width: 150px;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .item:hover .tooltip {
+            visibility: visible;
+        }
+        .bronze-altar {
+            background-color: #CD7F32;
+        }
+        .laver {
+            background-color: #4682B4;
+        }
+        .lampstand {
+            background-color: #FFD700;
+        }
+        .table {
+            background-color: #8B4513;
+            color: white;
+        }
+        .altar {
+            background-color: #A0522D;
+            color: white;
+        }
+        .ark {
+            background-color: #DAA520;
+        }
+    </style>
+</head>
+<body>
+    <div class="temple-container">
+        <h1 class="temple-title">所罗门圣殿展开图</h1>
+        <div class="temple-layout">
+            <div class="door">外院门</div>
+            <div class="outer-court">
+                <div class="area-label">外院</div>
+                <div class="item bronze-altar" style="top: 40px; left: 50px;">
+                    铜祭坛
+                    <div class="tooltip">铜祭坛 - 用于献祭动物，象征赎罪</div>
+                </div>
+                <div class="item laver" style="top: 40px; left: 150px;">
+                    洗濯盆
+                    <div class="tooltip">洗濯盆 - 祭司在此洗手洗脚，象征洁净</div>
+                </div>
+            </div>
+            <div class="door">圣所门</div>
+            <div class="holy-place">
+                <div class="area-label">圣所</div>
+                <div class="item lampstand" style="top: 70px; left: 50px;">
+                    金灯台
+                    <div class="tooltip">金灯台 - 提供圣所的光照，象征神的同在</div>
+                </div>
+                <div class="item table" style="top: 70px; left: 150px;">
+                    陈设饼桌
+                    <div class="tooltip">陈设饼桌 - 摆放12个饼，象征神的供应</div>
+                </div>
+                <div class="item altar" style="top: 70px; left: 250px;">
+                    香坛
+                    <div class="tooltip">香坛 - 焚烧香料，象征祷告升到神面前</div>
+                </div>
+            </div>
+            <div class="door">至圣所门</div>
+            <div class="most-holy-place">
+                <div class="area-label">至圣所</div>
+                <div class="item ark" style="top: 40px; left: 80px;">
+                    约柜
+                    <div class="tooltip">约柜 - 存放十诫法版，象征神的约和同在</div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+            <p>鼠标悬停在物品上查看详细信息</p>
+        </div>
+    </div>
+</body>
+</html>
