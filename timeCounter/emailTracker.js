@@ -1,5 +1,11 @@
-// 初始化EmailJS - 简化配置
-emailjs.init('VGHGInbSX3zkOgJSG');
+// 手动环境切换 (true=生产环境, false=测试环境)
+// 部署时请将此值改为true
+const isProduction = false;
+
+// 初始化EmailJS - 仅在生产环境初始化
+if (isProduction) {
+    emailjs.init('VGHGInbSX3zkOgJSG');
+}
 
 // 获取访问者IP
 async function getVisitorIP() {
@@ -21,6 +27,11 @@ function getBeijingTime() {
 
 // 发送访问信息邮件
 async function sendVisitEmail() {
+    if (!isProduction) {
+        console.log('测试环境 - 跳过邮件发送');
+        return;
+    }
+
     const ip = await getVisitorIP();
     const beijingTime = getBeijingTime();
     
