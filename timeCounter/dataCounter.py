@@ -4,7 +4,13 @@ import json
 from email.header import decode_header
 import re
 
-# 邮箱配置
+# 配置参数
+ALL = 0  # 设置为1获取所有数据，或设置为0获取特定日期数据
+if (ALL == 1):
+    TARGET_DATE = None  # 设置为None获取所有数据
+else:
+    TARGET_DATE = "2025-08-15"  # 设置为"YYYY-MM-DD"格式获取特定日期数据
+
 EMAIL = 'timegmail@sina.com'
 PASSWORD = '8f010430e501a3d2'  # 客户端授权密码
 IMAP_SERVER = 'imap.sina.com'
@@ -109,6 +115,8 @@ def analyze_data(email_data):
     daily_data = {}
     for data in email_data:
         date = data['time'][:10]  # 提取YYYY-MM-DD
+        if TARGET_DATE and date != TARGET_DATE:
+            continue
         if date not in daily_data:
             daily_data[date] = []
         daily_data[date].append(data)
@@ -127,5 +135,6 @@ def analyze_data(email_data):
 
 if __name__ == "__main__":
     print("开始获取并分析邮件数据...")
+    print(f"当前目标日期: {'所有日期' if TARGET_DATE is None else TARGET_DATE}")
     email_data = get_email_content()
     analyze_data(email_data)
