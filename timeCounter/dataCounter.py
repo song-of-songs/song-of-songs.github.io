@@ -115,7 +115,10 @@ def analyze_data(email_data):
 
     # 保存每日数据
     for date, data_list in daily_data.items():
-        filename = f"timeCounter/dataJson/{date}.json"
+        # 确保目录存在
+        import os
+        os.makedirs("dataJson", exist_ok=True)
+        filename = f"dataJson/{date}.json"
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data_list, f, ensure_ascii=False, indent=2)
         print(f"已保存 {len(data_list)} 条数据到 {filename}")
