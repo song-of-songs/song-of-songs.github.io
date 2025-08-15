@@ -158,13 +158,25 @@
                 type: 'bar',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: '访问次数',
-                        data: chartData,
-                        backgroundColor: backgroundColors,
-                        borderColor: backgroundColors.map(c => c.replace('60%)', '40%)')),
-                        borderWidth: 1
-                    }]
+                    datasets: [
+                        {
+                            label: '访问次数',
+                            data: chartData,
+                            backgroundColor: backgroundColors,
+                            borderColor: backgroundColors.map(c => c.replace('60%)', '40%)')),
+                            borderWidth: 1,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: '独立IP数',
+                            data: uniqueIPs,
+                            backgroundColor: backgroundColors.map(c => c.replace('60%)', '80%)')),
+                            borderColor: backgroundColors.map(c => c.replace('60%)', '40%)')),
+                            borderWidth: 1,
+                            type: 'line',
+                            yAxisID: 'y1'
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -175,6 +187,18 @@
                             title: {
                                 display: true,
                                 text: '访问次数'
+                            },
+                            position: 'left'
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '独立IP数'
+                            },
+                            position: 'right',
+                            grid: {
+                                drawOnChartArea: false
                             }
                         },
                         x: {
@@ -186,12 +210,20 @@
                     },
                     plugins: {
                         legend: {
-                            display: false
+                            display: true,
+                            position: 'top'
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return `访问次数: ${context.raw}`;
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y;
+                                    }
+                                    return label;
                                 }
                             }
                         }
