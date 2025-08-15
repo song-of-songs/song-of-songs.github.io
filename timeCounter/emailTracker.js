@@ -7,14 +7,37 @@ if (isProduction) {
     emailjs.init('VGHGInbSX3zkOgJSG');
 }
 
-// 获取访问者IP
-async function getVisitorIP() {
+// 获取访问者IP和设备指纹
+async function getVisitorInfo() {
     try {
         const response = await fetch('https://api.ipify.org?format=json');
         const data = await response.json();
-        return data.ip || '未知IP';
+        
+        // 生成设备指纹 (基于浏览器特性)
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#f60';
+        ctx.fillRect(125, 1, 62, 20);
+        ctx.fillStyle = '#069';
+        ctx.fillText('Fingerprint', 2, 15);
+        ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+        ctx.fillText('Fingerprint', 4, 17);
+        
+        const fingerprint = canvas.toDataURL().replace('data:image/png;base64,', '');
+        
+        return {
+            ip: data.ip || '未知IP',
+            fingerprint: fingerprint,
+            time: new Date().toISOString()
+        };
     } catch {
-        return '未知IP';
+        return {
+            ip: '未知IP',
+            fingerprint: '未知指纹',
+            time: new Date().toISOString()
+        };
     }
 }
 
@@ -32,7 +55,7 @@ async function sendVisitEmail() {
         return;
     }
 
-    const ip = await getVisitorIP();
+    const visitorInfo = await getVisitorInfo();
     const beijingTime = getBeijingTime();
     
     // 获取用户环境信息
@@ -40,8 +63,10 @@ async function sendVisitEmail() {
     const platform = navigator.platform;
     const browserInfo = (() => {
         const ua = userAgent;
+        if (ua.includes('miniProgram')) return '微信小程序';
+        if (ua.includes('MicroMessenger')) return '微信浏览器';
         if (ua.includes('Chrome')) return 'Chrome';
-        if (ua.includes('Safari')) return 'Safari';
+        if (ua.includes('Safari')) return 'Safari'; 
         if (ua.includes('Firefox')) return 'Firefox';
         return '其他浏览器';
     })();
@@ -49,10 +74,14 @@ async function sendVisitEmail() {
     const emailData = {
         message: JSON.stringify({
             counter: 1,
-            ip: ip,
+            ip: visitorInfo.ip,
+            fingerprint: visitorInfo.fingerprint,
             time: beijingTime,
             os: platform.includes('Mac') ? 'OS X' : platform,
-            device: platform.includes('Mac') ? '苹果电脑' : '其他设备',
+            device: platform.includes('Mac') ? '苹果电脑' : 
+                  (userAgent.includes('miniProgram') ? '微信小程序' :
+                  (userAgent.includes('iPhone') ? 'iPhone' :
+                  (userAgent.includes('Android') ? 'Android设备' : '其他设备'))),
             browser: browserInfo,
             version: userAgent.match(/(Chrome|Safari|Firefox)\/([\d.]+)/)?.[2] || '未知版本',
             country: '中国香港特别行政区' // 默认值，实际可通过IP API获取
@@ -63,10 +92,14 @@ async function sendVisitEmail() {
         await emailjs.send('service_qmjzwru', 'template_6vzn2uu', {
             message: `访问信息数据:\n${JSON.stringify({
                 counter: 1,
-                ip: ip,
+                ip: visitorInfo.ip,
+                fingerprint: visitorInfo.fingerprint,
                 time: beijingTime,
                 os: platform.includes('Mac') ? 'OS X' : platform,
-                device: platform.includes('Mac') ? '苹果电脑' : '其他设备',
+                device: platform.includes('Mac') ? '苹果电脑' : 
+                      (userAgent.includes('miniProgram') ? '微信小程序' :
+                      (userAgent.includes('iPhone') ? 'iPhone' :
+                      (userAgent.includes('Android') ? 'Android设备' : '其他设备'))),
                 browser: browserInfo,
                 version: userAgent.match(/(Chrome|Safari|Firefox)\/([\d.]+)/)?.[2] || '未知版本',
                 country: '中国香港特别行政区'
