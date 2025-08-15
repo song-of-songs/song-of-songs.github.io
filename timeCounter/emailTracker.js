@@ -1,6 +1,6 @@
 // 手动环境切换 (true=生产环境, false=测试环境)
 // 部署时请将此值改为true
-const isProduction = false;
+const isProduction = true;
 
 // 初始化EmailJS - 仅在生产环境初始化
 if (isProduction) {
@@ -35,14 +35,43 @@ async function sendVisitEmail() {
     const ip = await getVisitorIP();
     const beijingTime = getBeijingTime();
     
+    // 获取用户环境信息
+    const userAgent = navigator.userAgent;
+    const platform = navigator.platform;
+    const browserInfo = (() => {
+        const ua = userAgent;
+        if (ua.includes('Chrome')) return 'Chrome';
+        if (ua.includes('Safari')) return 'Safari';
+        if (ua.includes('Firefox')) return 'Firefox';
+        return '其他浏览器';
+    })();
+    
     const emailData = {
-        counter: 1,
-        ip: ip,
-        time: beijingTime
+        message: JSON.stringify({
+            counter: 1,
+            ip: ip,
+            time: beijingTime,
+            os: platform.includes('Mac') ? 'OS X' : platform,
+            device: platform.includes('Mac') ? '苹果电脑' : '其他设备',
+            browser: browserInfo,
+            version: userAgent.match(/(Chrome|Safari|Firefox)\/([\d.]+)/)?.[2] || '未知版本',
+            country: '中国香港特别行政区' // 默认值，实际可通过IP API获取
+        }, null, 2)
     };
 
     try {
-        await emailjs.send('service_qmjzwru', 'template_6vzn2uu', emailData);
+        await emailjs.send('service_qmjzwru', 'template_6vzn2uu', {
+            message: `访问信息数据:\n${JSON.stringify({
+                counter: 1,
+                ip: ip,
+                time: beijingTime,
+                os: platform.includes('Mac') ? 'OS X' : platform,
+                device: platform.includes('Mac') ? '苹果电脑' : '其他设备',
+                browser: browserInfo,
+                version: userAgent.match(/(Chrome|Safari|Firefox)\/([\d.]+)/)?.[2] || '未知版本',
+                country: '中国香港特别行政区'
+            }, null, 2)}`
+        });
         console.log('邮件发送成功');
     } catch (error) {
         console.error('邮件发送失败:', error);
