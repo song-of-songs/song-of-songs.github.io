@@ -9,15 +9,15 @@
 <body>
     <div class="timer-container">
         <div class="timer-display">
-            <svg class="progress-ring" width="300" height="300">
+            <svg class="progress-ring" viewBox="0 0 300 300" width="300" height="300">
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stop-color="#8a2be2" />
                         <stop offset="100%" stop-color="#ff69b4" />
                     </linearGradient>
                 </defs>
-                <circle class="progress-ring__background" stroke-width="10" fill="transparent" r="140" cx="150" cy="150"/>
-                <circle class="progress-ring__circle" stroke-width="10" fill="transparent" r="140" cx="150" cy="150"/>
+                <circle class="progress-ring__background" stroke-width="10" fill="transparent" r="140" cx="150" cy="150" vector-effect="non-scaling-stroke"/>
+                <circle class="progress-ring__circle" stroke-width="10" fill="transparent" r="140" cx="150" cy="150" vector-effect="non-scaling-stroke"/>
             </svg>
             <div class="time-text">00:00:00</div>
         </div>

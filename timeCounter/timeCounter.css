@@ -38,10 +38,14 @@ body {
 
 .progress-ring {
     transform: rotate(-90deg);
+    max-width: 100%;
+    height: auto;
 }
 
 .progress-ring__background {
     stroke: var(--ring-bg);
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
 }
 
 .progress-ring__circle {
@@ -128,23 +132,43 @@ button:active {
 @media (max-width: 600px) {
     .timer-container {
         padding: 1rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .timer-display {
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
     
     .progress-ring {
-        width: 250px;
-        height: 250px;
+        width: 280px;
+        height: 280px;
     }
     
     .time-text {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+    
+    .time-input {
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .time-input input {
-        width: 60px;
+        width: 50px;
         font-size: 1rem;
     }
     
+    .buttons, .mode-toggle {
+        flex-wrap: wrap;
+    }
+    
     button {
-        padding: 0.6rem 1.2rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
 }

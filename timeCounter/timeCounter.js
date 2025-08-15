@@ -33,12 +33,17 @@ document.addEventListener('DOMContentLoaded', function() {
             `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         
         // 更新进度条
-        const progress = isCountUp 
-            ? (totalSeconds / initialSeconds) * circumference 
-            : (1 - (totalSeconds / initialSeconds)) * circumference;
-        progressRing.style.strokeDashoffset = isCountUp 
-            ? circumference - progress 
-            : progress;
+        let progressOffset;
+        if (isCountUp) {
+            progressOffset = initialSeconds > 0
+                ? circumference - (totalSeconds / initialSeconds * circumference)
+                : circumference;
+        } else {
+            progressOffset = initialSeconds > 0
+                ? (totalSeconds / initialSeconds * circumference)
+                : 0;
+        }
+        progressRing.style.strokeDashoffset = Math.min(Math.max(progressOffset, 0), circumference);
     }
 
     // 开始计时
@@ -112,5 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 初始化
     setCountUpMode();
+    progressRing.style.strokeDashoffset = 0; // 默认显示充满状态
     updateTimeDisplay();
 });
