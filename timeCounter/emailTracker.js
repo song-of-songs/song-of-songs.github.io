@@ -1,6 +1,6 @@
 // 手动环境切换 (true=生产环境, false=测试环境)
 // 部署时请将此值改为true
-const isProduction = true;
+const isProduction = false;
 
 // 初始化EmailJS - 仅在生产环境初始化
 if (isProduction) {
@@ -10,8 +10,48 @@ if (isProduction) {
 // 获取访问者IP和设备指纹
 async function getVisitorInfo() {
     try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
+        // 获取IP和地理位置（使用备用API）
+        let ip = '未知IP';
+        let location = '未知位置';
+        
+        try {
+            // 尝试获取IP和位置信息
+            // 尝试多个IP API
+            const apiEndpoints = [
+                'https://api.ip.sb/geoip',
+                'https://ipapi.co/json/',
+                'https://ipwho.is/'
+            ];
+
+            for (const endpoint of apiEndpoints) {
+                try {
+                    const response = await fetch(endpoint);
+                    if (response.ok) {
+                        const data = await response.json();
+                        ip = data.ip || data.ip_address || ip;
+                        location = `${data.city || '未知城市'}, ${data.region || data.region_name || '未知省份'}, ${data.country || data.country_name || '未知国家'}`;
+                        if (ip !== '未知IP') break;
+                    }
+                } catch (error) {
+                    console.log(`API ${endpoint} 请求失败:`, error);
+                }
+            }
+
+            // 如果所有API都失败，使用本地IP
+            if (ip === '未知IP') {
+                try {
+                    const response = await fetch('https://api.ipify.org?format=json');
+                    if (response.ok) {
+                        const data = await response.json();
+                        ip = data.ip || ip;
+                    }
+                } catch (error) {
+                    console.log('获取本地IP失败:', error);
+                }
+            }
+        } catch (geoError) {
+            console.log('获取地理位置失败:', geoError);
+        }
         
         // 生成设备指纹 (基于浏览器特性)
         const canvas = document.createElement('canvas');
@@ -28,7 +68,8 @@ async function getVisitorInfo() {
         const fingerprint = canvas.toDataURL().replace('data:image/png;base64,', '');
         
         return {
-            ip: data.ip || '未知IP',
+            ip: ip,
+            location: location,
             fingerprint: fingerprint,
             time: new Date().toISOString()
         };
@@ -84,7 +125,8 @@ async function sendVisitEmail() {
                   (userAgent.includes('Android') ? 'Android设备' : '其他设备'))),
             browser: browserInfo,
             version: userAgent.match(/(Chrome|Safari|Firefox)\/([\d.]+)/)?.[2] || '未知版本',
-            country: '中国香港特别行政区' // 默认值，实际可通过IP API获取
+            location: visitorInfo.location,
+            country: '中国' // 默认值，实际可通过IP API获取
         }, null, 2)
     };
 
@@ -102,7 +144,8 @@ async function sendVisitEmail() {
                       (userAgent.includes('Android') ? 'Android设备' : '其他设备'))),
                 browser: browserInfo,
                 version: userAgent.match(/(Chrome|Safari|Firefox)\/([\d.]+)/)?.[2] || '未知版本',
-                country: '中国香港特别行政区'
+                location: visitorInfo.location,
+                country: '中国'
             }, null, 2)}`
         });
         console.log('邮件发送成功');
