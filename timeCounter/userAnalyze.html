@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户访问数据分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .chart-container {
+            margin: 30px 0;
+            position: relative;
+            height: 400px;
+        }
+        .date-selector {
+            margin: 20px 0;
+            text-align: center;
+        }
+        select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        .summary {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>用户访问数据分析</h1>
+        
+        <div class="date-selector">
+            <label for="dateSelect">选择日期：</label>
+            <select id="dateSelect"></select>
+        </div>
+        
+        <div class="summary" id="summary"></div>
+        
+        <div class="chart-container">
+            <canvas id="accessChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // 获取所有JSON文件
+        async function loadDataFiles() {
+            try {
+                // 使用硬编码的文件列表，因为浏览器无法直接读取目录
+                const response = await fetch('dataJson/2025-08-15.json');
+                if (!response.ok) {
+                    throw new Error('无法获取示例数据文件');
+                }
+                // 检查是否有其他日期文件
+                const knownDates = ['2025-08-15']; // 可以添加更多已知日期
+                return knownDates.map(date => `${date}.json`);
+            } catch (error) {
+                console.error('加载数据文件时出错:', error);
+                return [];
+            }
+        }
+
+        // 加载特定日期的数据
+        async function loadDateData(date) {
+            try {
+                const response = await fetch(`dataJson/${date}.json`);
+                if (!response.ok) {
+                    throw new Error('无法获取数据');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error(`加载${date}数据时出错:`, error);
+                return null;
+            }
+        }
+
+        // 初始化图表
+        let accessChart;
+        function initChart(data) {
+            const ctx = document.getElementById('accessChart').getContext('2d');
+            
+            // 按IP分组并统计访问次数
+            const ipData = {};
+            data.forEach(entry => {
+                if (!ipData[entry.ip]) {
+                    ipData[entry.ip] = 0;
+                }
+                ipData[entry.ip] += entry.counter;
+            });
+
+            // 准备图表数据
+            const labels = Object.keys(ipData);
+            const chartData = Object.values(ipData);
+
+            // 生成颜色
+            const backgroundColors = labels.map((_, i) => {
+                const hue = (i * 137.508) % 360; // 黄金角度分布
+                return `hsl(${hue}, 70%, 60%)`;
+            });
+
+            // 销毁旧图表
+            if (accessChart) {
+                accessChart.destroy();
+            }
+
+            // 创建新图表
+            accessChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '访问次数',
+                        data: chartData,
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors.map(c => c.replace('60%)', '40%)')),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '访问次数'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '用户IP'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `访问次数: ${context.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 更新摘要信息
+            updateSummary(data, labels.length);
+        }
+
+        // 更新摘要信息
+        function updateSummary(data, uniqueIPs) {
+            const totalVisits = data.reduce((sum, entry) => sum + entry.counter, 0);
+            const summaryEl = document.getElementById('summary');
+            summaryEl.innerHTML = `
+                <h3>数据摘要</h3>
+                <p>总访问次数: <strong>${totalVisits}</strong></p>
+                <p>独立IP数量: <strong>${uniqueIPs}</strong></p>
+                <p>平均每个IP访问次数: <strong>${(totalVisits / uniqueIPs).toFixed(1)}</strong></p>
+            `;
+        }
+
+        // 初始化页面
+        async function initPage() {
+            // 加载可用日期
+            const dateSelect = document.getElementById('dateSelect');
+            const files = await loadDataFiles();
+            
+            // 填充日期选择器
+            files.forEach(file => {
+                const date = file.replace('.json', '');
+                const option = document.createElement('option');
+                option.value = date;
+                option.textContent = date;
+                dateSelect.appendChild(option);
+            });
+
+            // 默认加载最新日期的数据
+            if (files.length > 0) {
+                const latestDate = files[files.length - 1].replace('.json', '');
+                const data = await loadDateData(latestDate);
+                if (data) {
+                    initChart(data);
+                }
+            }
+
+            // 日期选择事件
+            dateSelect.addEventListener('change', async () => {
+                const selectedDate = dateSelect.value;
+                const data = await loadDateData(selectedDate);
+                if (data) {
+                    initChart(data);
+                }
+            });
+        }
+
+        // 启动页面
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
