@@ -1,0 +1,150 @@
+:root {
+    --primary-color: #8a2be2;
+    --secondary-color: #ff69b4;
+    --accent-color: #00ff7f;
+    --highlight-color: #ff8c00;
+    --bg-color: #1a1a2e;
+    --text-color: #ffffff;
+    --ring-bg: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-color), #16213e);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.timer-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    text-align: center;
+}
+
+.timer-display {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring__background {
+    stroke: var(--ring-bg);
+}
+
+.progress-ring__circle {
+    stroke: url(#gradient);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.time-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.timer-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.time-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.time-input input {
+    width: 80px;
+    padding: 0.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.buttons, .mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+#countUpBtn {
+    background: linear-gradient(45deg, var(--accent-color), #00bfff);
+}
+
+#countDownBtn {
+    background: linear-gradient(45deg, var(--highlight-color), #ff4500);
+}
+
+@media (max-width: 600px) {
+    .timer-container {
+        padding: 1rem;
+    }
+    
+    .progress-ring {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .time-text {
+        font-size: 2.5rem;
+    }
+    
+    .time-input input {
+        width: 60px;
+        font-size: 1rem;
+    }
+    
+    button {
+        padding: 0.6rem 1.2rem;
+    }
+}

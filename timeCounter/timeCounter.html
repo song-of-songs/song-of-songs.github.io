@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>花哨计时器</title>
+    <link rel="stylesheet" href="timeCounter.css">
+</head>
+<body>
+    <div class="timer-container">
+        <div class="timer-display">
+            <svg class="progress-ring" width="300" height="300">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#8a2be2" />
+                        <stop offset="100%" stop-color="#ff69b4" />
+                    </linearGradient>
+                </defs>
+                <circle class="progress-ring__background" stroke-width="10" fill="transparent" r="140" cx="150" cy="150"/>
+                <circle class="progress-ring__circle" stroke-width="10" fill="transparent" r="140" cx="150" cy="150"/>
+            </svg>
+            <div class="time-text">00:00:00</div>
+        </div>
+        
+        <div class="timer-controls">
+            <div class="time-input">
+                <input type="number" id="hours" min="0" max="23" placeholder="时">
+                <span>:</span>
+                <input type="number" id="minutes" min="0" max="59" placeholder="分">
+                <span>:</span>
+                <input type="number" id="seconds" min="0" max="59" placeholder="秒">
+            </div>
+            
+            <div class="buttons">
+                <button id="startBtn">开始</button>
+                <button id="pauseBtn">暂停</button>
+                <button id="resetBtn">重置</button>
+            </div>
+            
+            <div class="mode-toggle">
+                <button id="countUpBtn">正计时</button>
+                <button id="countDownBtn">倒计时</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="timeCounter.js"></script>
+</body>
+</html>
