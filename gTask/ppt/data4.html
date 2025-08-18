@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吉他节奏与和弦</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+        }
+        .container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            margin-bottom: 2rem;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+        }
+        .rhythm-pattern {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .rhythm-cell {
+            width: 60px;
+            height: 60px;
+            background: #4cc9f0;
+            margin: 0 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.7);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .chord-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .chord-box {
+            width: 120px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .chord-box:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(114, 9, 183, 0.5);
+        }
+        .chord-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #f72585;
+        }
+        .chord-frets {
+            font-size: 1.2rem;
+            color: #4cc9f0;
+        }
+        @media (max-width: 768px) {
+            .rhythm-cell {
+                width: 40px;
+                height: 40px;
+                margin: 0 5px;
+            }
+            .chord-box {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-5">吉他节奏与和弦</h1>
+                
+                <!-- 基本节奏型 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>基本节奏型</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="rhythm-pattern">
+                            <div class="rhythm-cell">↓</div>
+                            <div class="rhythm-cell">↑</div>
+                            <div class="rhythm-cell">↓</div>
+                            <div class="rhythm-cell">↑</div>
+                        </div>
+                        <div class="text-center">
+                            <p>基本4/4拍节奏型：下-上-下-上</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G大调和弦进行 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>G大调4-5-3-6-2-5-1和弦进行</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="chord-diagram">
+                            <div class="chord-box">
+                                <div class="chord-name">IV (C)</div>
+                                <div class="chord-diagram">
+                                    <svg width="120" height="150" viewBox="0 0 120 150">
+                                        <!-- 琴弦 -->
+                                        <line x1="20" y1="20" x2="100" y2="20" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="40" x2="100" y2="40" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="60" x2="100" y2="60" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="80" x2="100" y2="80" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="100" x2="100" y2="100" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="120" x2="100" y2="120" stroke="#ccc" stroke-width="2"/>
+                                        
+                                        <!-- 品丝 -->
+                                        <line x1="20" y1="20" x2="20" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="40" y1="20" x2="40" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="60" y1="20" x2="60" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="80" y1="20" x2="80" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="100" y1="20" x2="100" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        
+                                        <!-- 和弦指法 -->
+                                        <circle cx="40" cy="30" r="10" fill="#f72585"/>
+                                        <circle cx="60" cy="50" r="10" fill="#f72585"/>
+                                        <circle cx="80" cy="70" r="10" fill="#f72585"/>
+                                        <circle cx="40" cy="90" r="10" fill="#f72585"/>
+                                        <text x="60" y="140" fill="#4cc9f0" text-anchor="middle">x32010</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="chord-box">
+                                <div class="chord-name">V (D)</div>
+                                <div class="chord-diagram">
+                                    <svg width="120" height="150" viewBox="0 0 120 150">
+                                        <!-- 琴弦 -->
+                                        <line x1="20" y1="20" x2="100" y2="20" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="40" x2="100" y2="40" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="60" x2="100" y2="60" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="80" x2="100" y2="80" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="100" x2="100" y2="100" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="120" x2="100" y2="120" stroke="#ccc" stroke-width="2"/>
+                                        
+                                        <!-- 品丝 -->
+                                        <line x1="20" y1="20" x2="20" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="40" y1="20" x2="40" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="60" y1="20" x2="60" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="80" y1="20" x2="80" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="100" y1="20" x2="100" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        
+                                        <!-- 和弦指法 -->
+                                        <circle cx="60" cy="70" r="10" fill="#f72585"/>
+                                        <circle cx="80" cy="90" r="10" fill="#f72585"/>
+                                        <circle cx="60" cy="110" r="10" fill="#f72585"/>
+                                        <text x="20" y="15" fill="#ff0000" text-anchor="middle">X</text>
+                                        <text x="40" y="15" fill="#ff0000" text-anchor="middle">X</text>
+                                        <text x="60" y="140" fill="#4cc9f0" text-anchor="middle">xx0232</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="chord-box">
+                                <div class="chord-name">iii (Bm)</div>
+                                <div class="chord-diagram">
+                                    <svg width="120" height="150" viewBox="0 0 120 150">
+                                        <!-- 琴弦 -->
+                                        <line x1="20" y1="20" x2="100" y2="20" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="40" x2="100" y2="40" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="60" x2="100" y2="60" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="80" x2="100" y2="80" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="100" x2="100" y2="100" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="120" x2="100" y2="120" stroke="#ccc" stroke-width="2"/>
+                                        
+                                        <!-- 品丝 -->
+                                        <line x1="20" y1="20" x2="20" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="40" y1="20" x2="40" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="60" y1="20" x2="60" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="80" y1="20" x2="80" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="100" y1="20" x2="100" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        
+                                        <!-- 和弦指法 -->
+                                        <rect x="15" y="15" width="10" height="130" fill="rgba(0,0,0,0.3)"/>
+                                        <circle cx="40" cy="70" r="10" fill="#f72585"/>
+                                        <circle cx="60" cy="70" r="10" fill="#f72585"/>
+                                        <circle cx="80" cy="90" r="10" fill="#f72585"/>
+                                        <circle cx="60" cy="110" r="10" fill="#f72585"/>
+                                        <text x="20" y="15" fill="#ff0000" text-anchor="middle">X</text>
+                                        <text x="60" y="140" fill="#4cc9f0" text-anchor="middle">x24432</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="chord-box">
+                                <div class="chord-name">vi (Em)</div>
+                                <div class="chord-diagram">
+                                    <svg width="120" height="150" viewBox="0 0 120 150">
+                                        <!-- 琴弦 -->
+                                        <line x1="20" y1="20" x2="100" y2="20" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="40" x2="100" y2="40" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="60" x2="100" y2="60" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="80" x2="100" y2="80" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="100" x2="100" y2="100" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="120" x2="100" y2="120" stroke="#ccc" stroke-width="2"/>
+                                        
+                                        <!-- 品丝 -->
+                                        <line x1="20" y1="20" x2="20" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="40" y1="20" x2="40" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="60" y1="20" x2="60" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="80" y1="20" x2="80" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="100" y1="20" x2="100" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        
+                                        <!-- 和弦指法 -->
+                                        <circle cx="40" cy="50" r="10" fill="#f72585"/>
+                                        <circle cx="60" cy="50" r="10" fill="#f72585"/>
+                                        <text x="60" y="140" fill="#4cc9f0" text-anchor="middle">022000</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="chord-box">
+                                <div class="chord-name">ii (Am)</div>
+                                <div class="chord-diagram">
+                                    <svg width="120" height="150" viewBox="0 0 120 150">
+                                        <!-- 琴弦 -->
+                                        <line x1="20" y1="20" x2="100" y2="20" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="40" x2="100" y2="40" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="60" x2="100" y2="60" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="80" x2="100" y2="80" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="100" x2="100" y2="100" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="120" x2="100" y2="120" stroke="#ccc" stroke-width="2"/>
+                                        
+                                        <!-- 品丝 -->
+                                        <line x1="20" y1="20" x2="20" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="40" y1="20" x2="40" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="60" y1="20" x2="60" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="80" y1="20" x2="80" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="100" y1="20" x2="100" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        
+                                        <!-- 和弦指法 -->
+                                        <circle cx="40" cy="50" r="10" fill="#f72585"/>
+                                        <circle cx="60" cy="50" r="10" fill="#f72585"/>
+                                        <circle cx="80" cy="70" r="10" fill="#f72585"/>
+                                        <circle cx="40" cy="90" r="10" fill="#f72585"/>
+                                        <text x="20" y="15" fill="#ff0000" text-anchor="middle">X</text>
+                                        <text x="60" y="140" fill="#4cc9f0" text-anchor="middle">x02210</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="chord-box">
+                                <div class="chord-name">V (D)</div>
+                                <div class="chord-diagram">
+                                    <svg width="120" height="150" viewBox="0 0 120 150">
+                                        <!-- 琴弦 -->
+                                        <line x1="20" y1="20" x2="100" y2="20" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="40" x2="100" y2="40" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="60" x2="100" y2="60" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="80" x2="100" y2="80" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="100" x2="100" y2="100" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="120" x2="100" y2="120" stroke="#ccc" stroke-width="2"/>
+                                        
+                                        <!-- 品丝 -->
+                                        <line x1="20" y1="20" x2="20" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="40" y1="20" x2="40" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="60" y1="20" x2="60" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="80" y1="20" x2="80" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="100" y1="20" x2="100" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        
+                                        <!-- 和弦指法 -->
+                                        <circle cx="60" cy="70" r="10" fill="#f72585"/>
+                                        <circle cx="80" cy="90" r="10" fill="#f72585"/>
+                                        <circle cx="60" cy="110" r="10" fill="#f72585"/>
+                                        <text x="20" y="15" fill="#ff0000" text-anchor="middle">X</text>
+                                        <text x="40" y="15" fill="#ff0000" text-anchor="middle">X</text>
+                                        <text x="60" y="140" fill="#4cc9f0" text-anchor="middle">xx0232</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="chord-box">
+                                <div class="chord-name">I (G)</div>
+                                <div class="chord-diagram">
+                                    <svg width="120" height="150" viewBox="0 0 120 150">
+                                        <!-- 琴弦 -->
+                                        <line x1="20" y1="20" x2="100" y2="20" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="40" x2="100" y2="40" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="60" x2="100" y2="60" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="80" x2="100" y2="80" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="100" x2="100" y2="100" stroke="#ccc" stroke-width="2"/>
+                                        <line x1="20" y1="120" x2="100" y2="120" stroke="#ccc" stroke-width="2"/>
+                                        
+                                        <!-- 品丝 -->
+                                        <line x1="20" y1="20" x2="20" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="40" y1="20" x2="40" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="60" y1="20" x2="60" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="80" y1="20" x2="80" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        <line x1="100" y1="20" x2="100" y2="120" stroke="#999" stroke-width="1.5"/>
+                                        
+                                        <!-- 和弦指法 -->
+                                        <circle cx="60" cy="50" r="10" fill="#f72585"/>
+                                        <circle cx="40" cy="70" r="10" fill="#f72585"/>
+                                        <circle cx="100" cy="90" r="10" fill="#f72585"/>
+                                        <circle cx="100" cy="110" r="10" fill="#f72585"/>
+                                        <text x="60" y="140" fill="#4cc9f0" text-anchor="middle">320003</text>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 添加动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const rhythmCells = document.querySelectorAll('.rhythm-cell');
+            rhythmCells.forEach((cell, index) => {
+                cell.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            const chordBoxes = document.querySelectorAll('.chord-box');
+            chordBoxes.forEach((box, index) => {
+                box.style.animation = `fadeIn 0.5s ease ${index * 0.1}s forwards`;
+                box.style.opacity = 0;
+            });
+        });
+    </script>
+</body>
+</html>
