@@ -113,12 +113,28 @@ document.addEventListener('DOMContentLoaded', function() {
         countDownBtn.disabled = true;
     }
 
+    // 处理输入变化
+    function handleInputChange() {
+        const hours = parseInt(hoursInput.value) || 0;
+        const minutes = parseInt(minutesInput.value) || 0;
+        const seconds = parseInt(secondsInput.value) || 0;
+        initialSeconds = hours * 3600 + minutes * 60 + seconds;
+        totalSeconds = isCountUp ? 0 : initialSeconds;
+        updateTimeDisplay();
+    }
+
     // 事件监听
     startBtn.addEventListener('click', startTimer);
     pauseBtn.addEventListener('click', pauseTimer);
     resetBtn.addEventListener('click', resetTimer);
     countUpBtn.addEventListener('click', setCountUpMode);
     countDownBtn.addEventListener('click', setCountDownMode);
+    hoursInput.addEventListener('change', handleInputChange);
+    hoursInput.addEventListener('input', handleInputChange);
+    minutesInput.addEventListener('change', handleInputChange);
+    minutesInput.addEventListener('input', handleInputChange);
+    secondsInput.addEventListener('change', handleInputChange);
+    secondsInput.addEventListener('input', handleInputChange);
 
     // 初始化
     setCountUpMode();
