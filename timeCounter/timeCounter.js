@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const secondsInput = document.getElementById('seconds');
     const progressRing = document.querySelector('.progress-ring__circle');
 
-    // 计算圆周长
-    const radius = progressRing.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
-    progressRing.style.strokeDasharray = circumference;
+    // 计算圆周长 - 用于SVG进度条
+    const radius = progressRing.r.baseVal.value; // 获取SVG圆的半径
+    const circumference = 2 * Math.PI * radius; // 计算圆周长: 2πr
+    progressRing.style.strokeDasharray = circumference; // 设置虚线模式为完整圆周长
 
     // 计时器变量
     let timer;
@@ -33,16 +33,21 @@ document.addEventListener('DOMContentLoaded', function() {
             `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         
         // 更新进度条
-        let progressOffset;
+        let progressOffset; // 存储进度条偏移量
         if (isCountUp) {
-            progressOffset = initialSeconds > 0
-                ? circumference - (totalSeconds / initialSeconds * circumference)
-                : circumference;
+            // 默认
+            progressOffset = 0;
+            // 正计时模式: 进度条从空到满
+            // progressOffset = initialSeconds > 0
+            //     ? circumference - (totalSeconds / initialSeconds * circumference) // 计算剩余比例
+            //     : 0; // 如果没有设置初始时间，保持空状态
         } else {
+            // 倒计时模式: 进度条从满到空
             progressOffset = initialSeconds > 0
-                ? (totalSeconds / initialSeconds * circumference)
-                : 0;
+                ? circumference - (totalSeconds / initialSeconds * circumference) // 计算已用比例
+                : 0; // 如果没有设置初始时间，保持满状态
         }
+        // 确保偏移量在0-circumference范围内，并应用到SVG
         progressRing.style.strokeDashoffset = Math.min(Math.max(progressOffset, 0), circumference);
     }
 
@@ -117,6 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 初始化
     setCountUpMode();
-    progressRing.style.strokeDashoffset = 0; // 默认显示充满状态
+    progressRing.style.strokeDashoffset = circumference; // 默认显示空状态(偏移量为圆周长)
     updateTimeDisplay();
 });
