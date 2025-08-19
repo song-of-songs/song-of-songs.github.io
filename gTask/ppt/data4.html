@@ -432,10 +432,16 @@
             const initialImages = Array.from(allImages).slice(0, 3);
             initialImages.forEach(img => {
                 console.log('Loading initial image:', img.dataset.src);
-                img.src = img.dataset.src;
-                img.onload = () => {
-                    img.classList.add('loaded');
-                    img.style.opacity = '1';
+                img.classList.add('loading');
+                const tempImg = new Image();
+                tempImg.src = img.dataset.src;
+                tempImg.onload = () => {
+                    img.src = img.dataset.src;
+                    img.onload = () => {
+                        img.classList.remove('loading');
+                        img.classList.add('loaded');
+                        img.style.opacity = '1';
+                    };
                 };
                 imgObserver.unobserve(img);
             });
