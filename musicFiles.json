@@ -215,6 +215,11 @@
     "type": "audio"
   },
   {
+    "name": "向我神-约书亚",
+    "file": "musicFiles/向我神-约书亚.mp3",
+    "type": "audio"
+  },
+  {
     "name": "十分鐘以內，一次搞懂所有的現代和弦代號！",
     "file": "musicFiles/十分鐘以內，一次搞懂所有的現代和弦代號！.mp4",
     "type": "video"
