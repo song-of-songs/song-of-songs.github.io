@@ -35,6 +35,7 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
             border: 1px solid rgba(0,0,0,0.05);
+            width: 100%;
         }
         .gallery-item:hover {
             transform: translateY(-3px);
@@ -44,10 +45,27 @@
             width: 100%;
             height: auto;
             display: block;
-            transition: opacity 0.3s ease;
+            min-height: 200px;
+            background: #f0f0f0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            position: relative;
         }
-        .gallery-item:hover .gallery-img {
-            opacity: 0.95;
+        .gallery-img::before {
+            content: "正在加载中，请稍后...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #6d6875;
+            font-size: 14px;
+        }
+        .gallery-img.loaded::before {
+            display: none;
+        }
+        .gallery-img.loaded {
+            opacity: 1;
+            background: transparent;
         }
         .img-caption {
             padding: 18px;
@@ -69,6 +87,9 @@
             .img-caption {
                 padding: 15px;
             }
+            .gallery-img {
+                min-height: 150px;
+            }
         }
     </style>
 </head>
@@ -79,195 +100,315 @@
         </div>
 
         <div class="row gallery-container">
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3618.jpg" alt="课件图片 1" class="gallery-img">
+                    <img data-src="../h04/IMG_3618.jpg" alt="课件图片 1" class="gallery-img">
                     <div class="img-caption">第1页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3619.jpg" alt="课件图片 2" class="gallery-img">
+                    <img data-src="../h04/IMG_3619.jpg" alt="课件图片 2" class="gallery-img">
                     <div class="img-caption">第2页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3620.jpg" alt="课件图片 3" class="gallery-img">
+                    <img data-src="../h04/IMG_3620.jpg" alt="课件图片 3" class="gallery-img">
                     <div class="img-caption">第3页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3621.PNG" alt="课件图片 4" class="gallery-img">
+                    <img data-src="../h04/IMG_3621.PNG" alt="课件图片 4" class="gallery-img">
                     <div class="img-caption">第4页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3622.PNG" alt="课件图片 5" class="gallery-img">
+                    <img data-src="../h04/IMG_3622.PNG" alt="课件图片 5" class="gallery-img">
                     <div class="img-caption">第5页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3623.PNG" alt="课件图片 6" class="gallery-img">
+                    <img data-src="../h04/IMG_3623.PNG" alt="课件图片 6" class="gallery-img">
                     <div class="img-caption">第6页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3624.PNG" alt="课件图片 7" class="gallery-img">
+                    <img data-src="../h04/IMG_3624.PNG" alt="课件图片 7" class="gallery-img">
                     <div class="img-caption">第7页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3625.PNG" alt="课件图片 8" class="gallery-img">
+                    <img data-src="../h04/IMG_3625.PNG" alt="课件图片 8" class="gallery-img">
                     <div class="img-caption">第8页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3626.PNG" alt="课件图片 9" class="gallery-img">
+                    <img data-src="../h04/IMG_3626.PNG" alt="课件图片 9" class="gallery-img">
                     <div class="img-caption">第9页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3627.PNG" alt="课件图片 10" class="gallery-img">
+                    <img data-src="../h04/IMG_3627.PNG" alt="课件图片 10" class="gallery-img">
                     <div class="img-caption">第10页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3628.PNG" alt="课件图片 11" class="gallery-img">
+                    <img data-src="../h04/IMG_3628.PNG" alt="课件图片 11" class="gallery-img">
                     <div class="img-caption">第11页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3629.PNG" alt="课件图片 12" class="gallery-img">
+                    <img data-src="../h04/IMG_3629.PNG" alt="课件图片 12" class="gallery-img">
                     <div class="img-caption">第12页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3630.PNG" alt="课件图片 13" class="gallery-img">
+                    <img data-src="../h04/IMG_3630.PNG" alt="课件图片 13" class="gallery-img">
                     <div class="img-caption">第13页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3631.PNG" alt="课件图片 14" class="gallery-img">
+                    <img data-src="../h04/IMG_3631.PNG" alt="课件图片 14" class="gallery-img">
                     <div class="img-caption">第14页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3632.PNG" alt="课件图片 15" class="gallery-img">
+                    <img data-src="../h04/IMG_3632.PNG" alt="课件图片 15" class="gallery-img">
                     <div class="img-caption">第15页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3633.PNG" alt="课件图片 16" class="gallery-img">
+                    <img data-src="../h04/IMG_3633.PNG" alt="课件图片 16" class="gallery-img">
                     <div class="img-caption">第16页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3634.PNG" alt="课件图片 17" class="gallery-img">
+                    <img data-src="../h04/IMG_3634.PNG" alt="课件图片 17" class="gallery-img">
                     <div class="img-caption">第17页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3635.PNG" alt="课件图片 18" class="gallery-img">
+                    <img data-src="../h04/IMG_3635.PNG" alt="课件图片 18" class="gallery-img">
                     <div class="img-caption">第18页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3636.PNG" alt="课件图片 19" class="gallery-img">
+                    <img data-src="../h04/IMG_3636.PNG" alt="课件图片 19" class="gallery-img">
                     <div class="img-caption">第19页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3637.JPG" alt="课件图片 20" class="gallery-img">
+                    <img data-src="../h04/IMG_3637.JPG" alt="课件图片 20" class="gallery-img">
                     <div class="img-caption">第20页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3638.JPG" alt="课件图片 21" class="gallery-img">
+                    <img data-src="../h04/IMG_3638.JPG" alt="课件图片 21" class="gallery-img">
                     <div class="img-caption">第21页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3639.JPG" alt="课件图片 22" class="gallery-img">
+                    <img data-src="../h04/IMG_3639.JPG" alt="课件图片 22" class="gallery-img">
                     <div class="img-caption">第22页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3640.JPG" alt="课件图片 23" class="gallery-img">
+                    <img data-src="../h04/IMG_3640.JPG" alt="课件图片 23" class="gallery-img">
                     <div class="img-caption">第23页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3641.JPG" alt="课件图片 24" class="gallery-img">
+                    <img data-src="../h04/IMG_3641.JPG" alt="课件图片 24" class="gallery-img">
                     <div class="img-caption">第24页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3642.JPG" alt="课件图片 25" class="gallery-img">
+                    <img data-src="../h04/IMG_3642.JPG" alt="课件图片 25" class="gallery-img">
                     <div class="img-caption">第25页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3643.JPG" alt="课件图片 26" class="gallery-img">
+                    <img data-src="../h04/IMG_3643.JPG" alt="课件图片 26" class="gallery-img">
                     <div class="img-caption">第26页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3644.JPG" alt="课件图片 27" class="gallery-img">
+                    <img data-src="../h04/IMG_3644.JPG" alt="课件图片 27" class="gallery-img">
                     <div class="img-caption">第27页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3645.JPG" alt="课件图片 28" class="gallery-img">
+                    <img data-src="../h04/IMG_3645.JPG" alt="课件图片 28" class="gallery-img">
                     <div class="img-caption">第28页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3646.JPG" alt="课件图片 29" class="gallery-img">
+                    <img data-src="../h04/IMG_3646.JPG" alt="课件图片 29" class="gallery-img">
                     <div class="img-caption">第29页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3647.JPG" alt="课件图片 30" class="gallery-img">
+                    <img data-src="../h04/IMG_3647.JPG" alt="课件图片 30" class="gallery-img">
                     <div class="img-caption">第30页</div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-12">
                 <div class="gallery-item">
-                    <img src="../h04/IMG_3648.JPG" alt="课件图片 31" class="gallery-img">
+                    <img data-src="../h04/IMG_3648.JPG" alt="课件图片 31" class="gallery-img">
                     <div class="img-caption">第31页</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="gallery-item">
+                    <img data-src="../h04/IMG_3649.PNG" alt="课件图片 32" class="gallery-img">
+                    <div class="img-caption">第32页</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="gallery-item">
+                    <img data-src="../h04/IMG_3650.PNG" alt="课件图片 33" class="gallery-img">
+                    <div class="img-caption">第33页</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="gallery-item">
+                    <img data-src="../h04/IMG_3651.PNG" alt="课件图片 34" class="gallery-img">
+                    <div class="img-caption">第34页</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="gallery-item">
+                    <img data-src="../h04/IMG_3652.PNG" alt="课件图片 35" class="gallery-img">
+                    <div class="img-caption">第35页</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="gallery-item">
+                    <img data-src="../h04/IMG_3653.PNG" alt="课件图片 36" class="gallery-img">
+                    <div class="img-caption">第36页</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="gallery-item">
+                    <img data-src="../h04/IMG_3654.PNG" alt="课件图片 37" class="gallery-img">
+                    <div class="img-caption">第37页</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="gallery-item">
+                    <img data-src="../h04/IMG_3655.PNG" alt="课件图片 38" class="gallery-img">
+                    <div class="img-caption">第38页</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有图片
+            const allImages = document.querySelectorAll('img');
+            const loadingStatus = document.createElement('div');
+            loadingStatus.id = 'loading-status';
+            loadingStatus.style.textAlign = 'center';
+            loadingStatus.style.padding = '20px';
+            loadingStatus.style.color = '#6d6875';
+            document.querySelector('.gallery-container').appendChild(loadingStatus);
+
+            // 配置Intersection Observer
+            const imgObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        console.log('Loading image:', img.dataset?.src || img.src);
+                        
+                        // 更新加载状态
+                        loadingStatus.textContent = `正在加载: ${img.alt}...`;
+                        
+                        // 创建新的Image对象预加载
+                        const tempImg = new Image();
+                        const src = img.dataset?.src || img.src;
+                        tempImg.src = src;
+                        tempImg.onload = () => {
+                            // 预加载成功后再设置实际img的src
+                            img.src = src;
+                            img.onload = () => {
+                                console.log('Image loaded:', src);
+                                img.classList.add('loaded');
+                                img.style.opacity = '1';
+                                loadingStatus.textContent = `${img.alt} 加载完成`;
+                                setTimeout(() => loadingStatus.textContent = '', 1000);
+                            };
+                        };
+                        tempImg.onerror = () => {
+                            console.error('Error preloading image:', src);
+                            img.parentElement.innerHTML = `
+                                <div style="padding:50px;text-align:center;color:red">
+                                    图片加载失败: ${src.split('/').pop()}
+                                </div>`;
+                            loadingStatus.textContent = `${img.alt} 加载失败`;
+                        };
+                        
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '0px 0px 500px 0px', // 提前500px加载
+                threshold: 0.001
+            });
+
+            // 观察所有图片
+            allImages.forEach(img => {
+                // 确保加载提示可见
+                img.style.opacity = '0';
+                img.style.background = '#f0f0f0';
+                if (!img.dataset.src && img.src) {
+                    img.dataset.src = img.src;
+                    img.removeAttribute('src');
+                }
+                imgObserver.observe(img);
+            });
+
+            // 初始加载前3张图片
+            const initialImages = Array.from(allImages).slice(0, 3);
+            initialImages.forEach(img => {
+                console.log('Loading initial image:', img.dataset.src);
+                img.src = img.dataset.src;
+                img.onload = () => {
+                    img.classList.add('loaded');
+                    img.style.opacity = '1';
+                };
+                imgObserver.unobserve(img);
+            });
+        });
+    </script>
 </body>
 </html>
