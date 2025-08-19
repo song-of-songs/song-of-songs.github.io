@@ -45,20 +45,44 @@
             width: 100%;
             height: auto;
             display: block;
-            min-height: 200px;
-            background: #f0f0f0;
+            min-height: 300px;
+            background: #f0f0f0 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f0f0"/></svg>') center/cover no-repeat;
             opacity: 0;
             transition: opacity 0.5s ease;
             position: relative;
         }
-        .gallery-img::before {
-            content: "正在加载中，请稍后...";
+        .gallery-img.loading {
+            opacity: 1;
+        }
+        .gallery-img.loading::before {
+            content: "正在加载，请稍后...";
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #6d6875;
-            font-size: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            white-space: nowrap;
+            background: rgba(120, 111, 166, 0.85);
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            letter-spacing: 1px;
+            backdrop-filter: blur(2px);
+            transition: all 0.3s ease;
+        }
+        .gallery-img.loading::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(240,240,240,0.7);
+            z-index: 90;
         }
         .gallery-img.loaded::before {
             display: none;
@@ -362,6 +386,7 @@
                             img.src = src;
                             img.onload = () => {
                                 console.log('Image loaded:', src);
+                                img.classList.remove('loading');
                                 img.classList.add('loaded');
                                 img.style.opacity = '1';
                                 loadingStatus.textContent = `${img.alt} 加载完成`;
@@ -387,9 +412,8 @@
 
             // 观察所有图片
             allImages.forEach(img => {
-                // 确保加载提示可见
-                img.style.opacity = '0';
-                img.style.background = '#f0f0f0';
+                // 添加loading状态
+                img.classList.add('loading');
                 if (!img.dataset.src && img.src) {
                     img.dataset.src = img.src;
                     img.removeAttribute('src');
