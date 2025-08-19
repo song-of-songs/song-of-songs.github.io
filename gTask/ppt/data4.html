@@ -55,7 +55,7 @@
             opacity: 1;
         }
         .gallery-img.loading::before {
-            content: "正在加载，请稍后...";
+            content: "加载中 请稍后";
             position: absolute;
             top: 50%;
             left: 50%;
@@ -113,6 +113,13 @@
             }
             .gallery-img {
                 min-height: 150px;
+            }
+            .gallery-img.loading::before {
+                font-size: 14px;
+                padding: 8px 16px;
+                white-space: normal;
+                max-width: 90%;
+                word-break: break-word;
             }
         }
     </style>
