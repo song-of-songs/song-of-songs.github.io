@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多音轨音频播放器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn {
+            background: #48bb78;
+            color: white;
+        }
+
+        .play-btn:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .pause-btn {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .pause-btn:hover {
+            background: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .stop-btn {
+            background: #718096;
+            color: white;
+        }
+
+        .stop-btn:hover {
+            background: #4a5568;
+            transform: translateY(-2px);
+        }
+
+        .tracks-container {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .track {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .track:hover {
+            border-color: #a0aec0;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .track-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .track-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .mute-btn, .solo-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mute-btn {
+            background: #ed8936;
+            color: white;
+        }
+
+        .mute-btn.active {
+            background: #dd6b20;
+        }
+
+        .solo-btn {
+            background: #9f7aea;
+            color: white;
+        }
+
+        .solo-btn.active {
+            background: #805ad5;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .volume-label {
+            font-weight: bold;
+            color: #4a5568;
+            min-width: 60px;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #cbd5e0;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4299e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            background: #3182ce;
+            transform: scale(1.2);
+        }
+
+        .volume-value {
+            font-weight: bold;
+            color: #4299e1;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .file-input-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .file-input {
+            padding: 12px 24px;
+            border: 2px dashed #a0aec0;
+            border-radius: 8px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input:hover {
+            border-color: #4299e1;
+            background: #ebf4ff;
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .track.active {
+            border-color: #4299e1;
+            background: #ebf4ff;
+        }
+
+        .track.soloed {
+            border-color: #9f7aea;
+            background: #faf5ff;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .progress-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .current-time, .total-time {
+            font-weight: bold;
+            color: #4a5568;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .progress-slider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #cbd5e0;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .progress-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4299e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-slider::-webkit-slider-thumb:hover {
+            background: #3182ce;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .track-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .track-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 多音轨音频播放器</h1>
+            <p>类似库乐队的多音轨控制界面</p>
+        </header>
+
+        <div class="controls">
+            <button class="control-btn play-btn" onclick="playAll()">▶️ 播放全部</button>
+            <button class="control-btn pause-btn" onclick="pauseAll()">⏸️ 暂停全部</button>
+            <button class="control-btn stop-btn" onclick="stopAll()">⏹️ 停止全部</button>
+        </div>
+
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-controls">
+                <span class="current-time" id="currentTime">0:00</span>
+                <input type="range" class="progress-slider" id="progressSlider" min="0" max="100" value="0" 
+                       oninput="seekAll(this.value)">
+                <span class="total-time" id="totalTime">0:00</span>
+            </div>
+        </div>
+
+        <div class="tracks-container" id="tracksContainer">
+            <!-- 音轨将通过JavaScript动态添加 -->
+        </div>
+
+        <div class="file-input-container">
+            <label class="file-input">
+                📁 添加音频文件
+                <input type="file" id="audioFileInput" multiple accept="audio/*" style="display: none;" onchange="addAudioFiles(this.files)">
+            </label>
+        </div>
+
+        <div class="status" id="status">
+            准备就绪 - 请添加音频文件开始使用
+        </div>
+    </div>
+
+    <script>
+        class MultiTrackPlayer {
+            constructor(onStatusUpdate) {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                this.tracks = [];
+                this.isPlaying = false;
+                this.soloMode = false;
+                this.onStatusUpdate = onStatusUpdate || function() {};
+            }
+
+            updateStatus(message) {
+                this.onStatusUpdate(message);
+            }
+
+            createTrack(audioFile, name) {
+                const track = {
+                    name: name || `音轨 ${this.tracks.length + 1}`,
+                    file: audioFile,
+                    source: null,
+                    gainNode: this.audioContext.createGain(),
+                    pannerNode: this.audioContext.createStereoPanner(),
+                    isMuted: false,
+                    isSolo: false,
+                    volume: 1.0,
+                    buffer: null,
+                    startTime: 0,
+                    pausedTime: 0
+                };
+
+                track.gainNode.connect(track.pannerNode);
+                track.pannerNode.connect(this.audioContext.destination);
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.audioContext.decodeAudioData(e.target.result, (buffer) => {
+                        track.buffer = buffer;
+                        this.updateStatus(`音轨 "${track.name}" 加载完成`);
+                    }, (error) => {
+                        console.error('解码音频数据错误:', error);
+                        this.updateStatus(`音轨 "${track.name}" 加载失败`);
+                    });
+                };
+                reader.readAsArrayBuffer(audioFile);
+
+                this.tracks.push(track);
+                return track;
+            }
+
+            playTrack(track) {
+                if (!track.buffer) return;
+
+                if (track.source) {
+                    track.source.stop();
+                }
+
+                track.source = this.audioContext.createBufferSource();
+                track.source.buffer = track.buffer;
+                track.source.connect(track.gainNode);
+
+                const now = this.audioContext.currentTime;
+                track.startTime = now;
+                track.source.start(now, track.pausedTime);
+
+                track.source.onended = () => {
+                    track.pausedTime = 0;
+                    track.startTime = 0;
+                };
+            }
+
+            pauseTrack(track) {
+                if (track.source && this.isPlaying) {
+                    track.source.stop();
+                    track.pausedTime = this.audioContext.currentTime - track.startTime;
+                    track.source = null;
+                }
+            }
+
+            stopTrack(track) {
+                if (track.source) {
+                    track.source.stop();
+                }
+                track.pausedTime = 0;
+                track.startTime = 0;
+                track.source = null;
+            }
+
+            setTrackVolume(track, volume) {
+                track.volume = volume;
+                track.gainNode.gain.setValueAtTime(volume, this.audioContext.currentTime);
+            }
+
+            muteTrack(track, mute) {
+                track.isMuted = mute;
+                const targetVolume = mute ? 0 : track.volume;
+                track.gainNode.gain.setValueAtTime(targetVolume, this.audioContext.currentTime);
+            }
+
+            soloTrack(track, solo) {
+                track.isSolo = solo;
+                this.soloMode = this.tracks.some(t => t.isSolo);
+
+                this.tracks.forEach(t => {
+                    if (this.soloMode) {
+                        const shouldPlay = t.isSolo || solo;
+                        t.gainNode.gain.setValueAtTime(shouldPlay ? t.volume : 0, this.audioContext.currentTime);
+                    } else {
+                        t.gainNode.gain.setValueAtTime(t.isMuted ? 0 : t.volume, this.audioContext.currentTime);
+                    }
+                });
+            }
+
+            playAll() {
+                if (this.isPlaying) return;
+
+                this.isPlaying = true;
+                this.tracks.forEach(track => {
+                    if (track.buffer) {
+                        this.playTrack(track);
+                    }
+                });
+                this.updateStatus('播放中...');
+            }
+
+            pauseAll() {
+                this.isPlaying = false;
+                this.tracks.forEach(track => {
+                    this.pauseTrack(track);
+                });
+                this.updateStatus('已暂停');
+            }
+
+            stopAll() {
+                this.isPlaying = false;
+                this.tracks.forEach(track => {
+                    this.stopTrack(track);
+                });
+                this.updateStatus('已停止');
+            }
+
+            getMaxDuration() {
+                let maxDuration = 0;
+                this.tracks.forEach(track => {
+                    if (track.buffer && track.buffer.duration > maxDuration) {
+                        maxDuration = track.buffer.duration;
+                    }
+                });
+                return maxDuration;
+            }
+
+            getCurrentTime() {
+                if (!this.isPlaying) return 0;
+                
+                let currentTime = 0;
+                this.tracks.forEach(track => {
+                    if (track.source && track.startTime > 0) {
+                        const trackTime = this.audioContext.currentTime - track.startTime;
+                        if (trackTime > currentTime) {
+                            currentTime = trackTime;
+                        }
+                    }
+                });
+                return currentTime;
+            }
+
+            seekAll(percentage) {
+                const maxDuration = this.getMaxDuration();
+                const targetTime = (percentage / 100) * maxDuration;
+                
+                this.tracks.forEach(track => {
+                    if (track.buffer) {
+                        this.pauseTrack(track);
+                        track.pausedTime = Math.min(targetTime, track.buffer.duration);
+                        if (this.isPlaying) {
+                            this.playTrack(track);
+                        }
+                    }
+                });
+            }
+        }
+
+        const player = new MultiTrackPlayer(updateStatus);
+
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+
+        function addAudioFiles(files) {
+            if (files.length === 0) return;
+
+            const tracksContainer = document.getElementById('tracksContainer');
+            
+            Array.from(files).forEach((file, index) => {
+                if (!file.type.startsWith('audio/')) {
+                    updateStatus(`跳过非音频文件: ${file.name}`);
+                    return;
+                }
+
+                const track = player.createTrack(file, file.name.replace(/\.[^/.]+$/, ""));
+                const trackElement = createTrackElement(track, index);
+                tracksContainer.appendChild(trackElement);
+            });
+
+            updateStatus(`添加了 ${files.length} 个音频文件`);
+        }
+
+        function createTrackElement(track, index) {
+            const trackDiv = document.createElement('div');
+            trackDiv.className = 'track';
+            trackDiv.id = `track-${index}`;
+
+            trackDiv.innerHTML = `
+                <div class="track-header">
+                    <div class="track-title">${track.name}</div>
+                    <div class="track-controls">
+                        <button class="mute-btn" onclick="toggleMute(${index})">静音</button>
+                        <button class="solo-btn" onclick="toggleSolo(${index})">独奏</button>
+                    </div>
+                </div>
+                <div class="volume-control">
+                    <span class="volume-label">音量:</span>
+                    <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1" 
+                           oninput="setVolume(${index}, this.value)">
+                    <span class="volume-value">100%</span>
+                </div>
+            `;
+
+            return trackDiv;
+        }
+
+        function toggleMute(index) {
+            const track = player.tracks[index];
+            const isMuted = !track.isMuted;
+            player.muteTrack(track, isMuted);
+            
+            const btn = document.querySelector(`#track-${index} .mute-btn`);
+            const trackElement = document.getElementById(`track-${index}`);
+            
+            if (isMuted) {
+                btn.classList.add('active');
+                btn.textContent = '取消静音';
+                trackElement.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = '静音';
+                trackElement.classList.remove('active');
+            }
+        }
+
+        function toggleSolo(index) {
+            const track = player.tracks[index];
+            const isSolo = !track.isSolo;
+            player.soloTrack(track, isSolo);
+            
+            const btn = document.querySelector(`#track-${index} .solo-btn`);
+            const trackElement = document.getElementById(`track-${index}`);
+            
+            if (isSolo) {
+                btn.classList.add('active');
+                btn.textContent = '取消独奏';
+                trackElement.classList.add('soloed');
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = '独奏';
+                trackElement.classList.remove('soloed');
+            }
+        }
+
+        function setVolume(index, volume) {
+            const track = player.tracks[index];
+            player.setTrackVolume(track, parseFloat(volume));
+            
+            const volumeValue = document.querySelector(`#track-${index} .volume-value`);
+            volumeValue.textContent = `${Math.round(volume * 100)}%`;
+        }
+
+        function playAll() {
+            if (player.audioContext.state === 'suspended') {
+                player.audioContext.resume();
+            }
+            player.playAll();
+            startProgressUpdate();
+        }
+
+        function pauseAll() {
+            player.pauseAll();
+            stopProgressUpdate();
+        }
+
+        function stopAll() {
+            player.stopAll();
+            stopProgressUpdate();
+            updateProgress(); // 更新一次以重置进度
+        }
+
+        function seekAll(percentage) {
+            player.seekAll(percentage);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgress() {
+            const progressContainer = document.getElementById('progressContainer');
+            const currentTimeElement = document.getElementById('currentTime');
+            const totalTimeElement = document.getElementById('totalTime');
+            const progressSlider = document.getElementById('progressSlider');
+
+            if (player.tracks.length > 0) {
+                progressContainer.style.display = 'block';
+                
+                const maxDuration = player.getMaxDuration();
+                const currentTime = player.getCurrentTime();
+                const percentage = maxDuration > 0 ? (currentTime / maxDuration) * 100 : 0;
+
+                currentTimeElement.textContent = formatTime(currentTime);
+                totalTimeElement.textContent = formatTime(maxDuration);
+                progressSlider.value = percentage;
+            } else {
+                progressContainer.style.display = 'none';
+            }
+        }
+
+        // 进度更新定时器
+        let progressInterval = null;
+
+        function startProgressUpdate() {
+            if (!progressInterval) {
+                progressInterval = setInterval(updateProgress, 100);
+            }
+        }
+
+        function stopProgressUpdate() {
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('准备就绪 - 请添加音频文件开始使用');
+            
+            // 添加拖放支持
+            const dropZone = document.body;
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.style.background = 'rgba(102, 126, 234, 0.1)';
+            });
+
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.style.background = '';
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.style.background = '';
+                addAudioFiles(e.dataTransfer.files);
+            });
+
+            // 开始进度更新（即使没有播放也显示总时长）
+            startProgressUpdate();
+        });
+    </script>
+</body>
+</html>
