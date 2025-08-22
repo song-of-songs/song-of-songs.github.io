@@ -122,6 +122,21 @@
                 rgba(255,255,255,0.6) 50%, 
                 rgba(255,255,255,0.8) 100%);
             margin: 0 20px;
+            position: relative;
+        }
+
+        .line-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 14px;
+            text-shadow: 0 0 5px rgba(0, 255, 136, 0.8);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2px 6px;
+            border-radius: 3px;
         }
     </style>
 </head>
@@ -135,12 +150,12 @@
         <div class="guitar-container">
             <div class="guitar-tablature">
                 <div class="guitar-staff">
-                    <div class="guitar-line"></div>
-                    <div class="guitar-line"></div>
-                    <div class="guitar-line"></div>
-                    <div class="guitar-line"></div>
-                    <div class="guitar-line"></div>
-                    <div class="guitar-line"></div>
+                    <div class="guitar-line"><span class="line-number">1</span></div>
+                    <div class="guitar-line"><span class="line-number">2</span></div>
+                    <div class="guitar-line"><span class="line-number">3</span></div>
+                    <div class="guitar-line"><span class="line-number">4</span></div>
+                    <div class="guitar-line"><span class="line-number">1</span></div>
+                    <div class="guitar-line"><span class="line-number">1</span><span class="line-number">1</span></div>
                 </div>
             </div>
         </div>
