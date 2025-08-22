@@ -12,18 +12,17 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #1a1a2e;
+            background: linear-gradient(135deg, #f8f6ff 0%, #f0edff 50%, #e8e5ff 100%);
             overflow: hidden;
             perspective: 1000px;
-            color: #fff;
+            color: #8a63d2;
         }
 
         .cross-container {
-            position: relative;
-            /* position: absolute;
+            position: absolute;
             top: 30%;
             left: 50%;
-            transform: translate(-50%, -50%); */
+            transform: translate(-50%, -50%);
             width: 200px;
             height: 200px;
             transform-style: preserve-3d;
@@ -33,10 +32,10 @@
 
         .line {
             position: absolute;
-            background: #00ff88;
-            border-radius: 1px;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.9);
+            background: #ff9ac6;
             transform-style: preserve-3d;
+            border-radius: 2px;
+            box-shadow: 0 0 12px rgba(255, 154, 198, 0.5);
         }
 
         .horizontal {
@@ -69,7 +68,7 @@
             width: 250px;
             height: 250px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,255,136,0.2) 0%, rgba(0,255,136,0) 70%);
+            background: radial-gradient(circle, rgba(255, 154, 198, 0.4) 0%, rgba(255, 154, 198, 0) 70%);
             filter: blur(15px);
             top: -25px;
             left: -25px;
@@ -100,13 +99,13 @@
 
         .guitar-tablature {
             width: 80%;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #00ff88;
-            border-radius: 4px;
+            background: #fff;
+            border: 2px solid #d6c2ff;
+            border-radius: 12px;
             padding: 20px 0;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
             transform: rotateX(45deg) rotateY(0deg) rotateZ(0deg);
             transform-style: preserve-3d;
+            box-shadow: 0 8px 20px rgba(214, 194, 255, 0.2);
         }
 
         .guitar-staff {
@@ -117,12 +116,10 @@
 
         .guitar-line {
             height: 2px;
-            background: linear-gradient(to right, 
-                rgba(255,255,255,0.8) 0%, 
-                rgba(255,255,255,0.6) 50%, 
-                rgba(255,255,255,0.8) 100%);
+            background: #d6c2ff;
             margin: 0 20px;
             position: relative;
+            border-radius: 1px;
         }
 
         .line-number {
@@ -130,18 +127,230 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #00ff88;
+            color: #8a63d2;
             font-weight: bold;
             font-size: 14px;
-            text-shadow: 0 0 5px rgba(0, 255, 136, 0.8);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 2px 6px;
-            border-radius: 3px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #8a63d2;
+            box-shadow: 0 0 8px rgba(138, 99, 210, 0.3);
+        }
+
+        /* 主题切换器样式 */
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, #ff9ac6, #d6c2ff);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(138, 99, 210, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(138, 99, 210, 0.4);
+        }
+
+        .theme-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: none;
+            min-width: 120px;
+        }
+
+        .theme-selector:hover .theme-options {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            color: var(--option-text, #8a63d2);
+        }
+
+        .theme-option:hover {
+            background: #f8f6ff;
+        }
+
+        .theme-option.active {
+            background: linear-gradient(135deg, #ff9ac6, #d6c2ff);
+            color: white;
+            font-weight: bold;
+        }
+
+        /* 主题颜色定义 */
+        .theme-pink {
+            --bg-color: linear-gradient(135deg, #ffd1dc, #ffb6c1);
+            --line-color: #ff85a2;
+            --border-color: #ff9ac6;
+            --text-color: #ff6b6b;
+            --glow-color: rgba(255, 154, 198, 0.4);
+            --number-bg: #ffffff;
+            --number-border: #ff6b6b;
+            --option-text: #ff6b6b;
+        }
+
+        .theme-black {
+            --bg-color: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            --line-color: #ff6b9d;
+            --border-color: #ff85a2;
+            --text-color: #1c1313;
+            --glow-color: rgba(255, 107, 157, 0.4);
+            --number-bg: #ffffff;
+            --number-border: #ff6b9d;
+            --option-text: #ec7a7a;
+        }
+
+        .theme-blue {
+            --bg-color: linear-gradient(135deg, #e8f4f8, #d1ebf2);
+            --line-color: #6ec4db;
+            --border-color: #a8d8ea;
+            --text-color: #4a6fa5;
+            --glow-color: rgba(110, 196, 219, 0.4);
+            --number-bg: #ffffff;
+            --number-border: #4a6fa5;
+            --option-text: #4a6fa5;
+        }
+
+        .theme-purple {
+            --bg-color: linear-gradient(135deg, #f8f6ff, #f0edff);
+            --line-color: #8a63d2;
+            --border-color: #d6c2ff;
+            --text-color: #8a63d2;
+            --glow-color: rgba(138, 99, 210, 0.4);
+            --number-bg: #ffffff;
+            --number-border: #8a63d2;
+            --option-text: #8a63d2;
+        }
+
+        .theme-white {
+            --bg-color: linear-gradient(135deg, #ffffff, #f8f9fa);
+            --line-color: #ff9ac6;
+            --border-color: #d6c2ff;
+            --text-color: #ff6b9d;
+            --glow-color: rgba(255, 154, 198, 0.4);
+            --number-bg: #ffffff;
+            --number-border: #ff6b9d;
+            --option-text: #ff6b9d;
+        }
+
+        /* 应用主题变量 */
+        body {
+            background: var(--bg-color, linear-gradient(135deg, #f8f6ff 0%, #f0edff 50%, #e8e5ff 100%));
+            color: var(--text-color, #8a63d2);
+        }
+
+        .line {
+            background: var(--line-color, #ff9ac6);
+            box-shadow: 0 0 12px var(--line-color, rgba(255, 154, 198, 0.5));
+        }
+
+        .guitar-tablature {
+            border-color: var(--border-color, #d6c2ff);
+            box-shadow: 0 8px 20px var(--border-color, rgba(214, 194, 255, 0.2));
+        }
+
+        .guitar-line {
+            background: var(--border-color, #d6c2ff);
+        }
+
+        .line-number {
+            color: var(--text-color, #8a63d2);
+            background: var(--number-bg, #ffffff);
+            border-color: var(--number-border, #8a63d2);
+            box-shadow: 0 0 8px var(--number-border, rgba(138, 99, 210, 0.3));
+        }
+
+        .glow {
+            background: radial-gradient(circle, var(--glow-color, rgba(255, 154, 198, 0.4)) 0%, rgba(255, 154, 198, 0) 70%);
         }
     </style>
+    <script>
+        // 主题切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeOptions = document.querySelectorAll('.theme-option');
+            const body = document.body;
+            
+            // 初始化主题
+            setTheme('white');
+            
+            // 添加点击事件
+            themeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    setTheme(theme);
+                    
+                    // 更新激活状态
+                    themeOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            function setTheme(theme) {
+                // 移除所有主题类
+                body.classList.remove('theme-pink', 'theme-black', 'theme-blue', 'theme-purple', 'theme-white');
+                
+                // 添加当前主题类
+                body.classList.add(`theme-${theme}`);
+                
+                // 保存主题到localStorage
+                localStorage.setItem('selectedTheme', theme);
+            }
+            
+            // 检查是否有保存的主题
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+                // 更新激活状态
+                themeOptions.forEach(option => {
+                    if (option.getAttribute('data-theme') === savedTheme) {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
 </head>
 <body>
     <div id="app">
+        <!-- 主题切换选项框 -->
+        <div class="theme-selector">
+            <div class="theme-toggle">🎨 主题</div>
+            <div class="theme-options">
+                <div class="theme-option" data-theme="pink">粉色萌系</div>
+                <div class="theme-option" data-theme="black">黑色萌系</div>
+                <div class="theme-option" data-theme="blue">蓝色萌系</div>
+                <div class="theme-option" data-theme="purple">紫色萌系</div>
+                <div class="theme-option active" data-theme="white">白色萌系</div>
+            </div>
+        </div>
+
         <div class="cross-container">
             <div class="glow"></div>
             <div class="line horizontal">↑</div>
@@ -154,8 +363,8 @@
                     <div class="guitar-line"><span class="line-number">2</span></div>
                     <div class="guitar-line"><span class="line-number">3</span></div>
                     <div class="guitar-line"><span class="line-number">4</span></div>
-                    <div class="guitar-line"><span class="line-number">1</span></div>
-                    <div class="guitar-line"><span class="line-number">1</span><span class="line-number">1</span></div>
+                    <div class="guitar-line"><span class="line-number">5</span></div>
+                    <div class="guitar-line"><span class="line-number">6</span></div>
                 </div>
             </div>
         </div>
