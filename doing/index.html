@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十字交叉线3D立体旋转</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a2e;
+            overflow: hidden;
+            perspective: 1000px;
+            color: #fff;
+        }
+
+        .cross-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            animation: rotate3d 6s infinite linear;
+        }
+
+        .line {
+            position: absolute;
+            background: #00ff88;
+            border-radius: 1px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.9);
+            transform-style: preserve-3d;
+        }
+
+        .horizontal {
+            width: 200px;
+            height: 3px;
+            top: 98.5px;
+            left: 0;
+            transform: translateZ(0px);
+        }
+
+        .vertical {
+            width: 3px;
+            height: 200px;
+            left: 98.5px;
+            top: 0;
+            transform: translateZ(0px);
+        }
+
+        @keyframes rotate3d {
+            0% {
+                transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg);
+            }
+            /* 25% {
+                transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+            }
+            50% {
+                transform: rotateX(60deg) rotateY(0deg) rotateZ(90deg);
+            }
+            75% {
+                transform: rotateX(60deg) rotateY(0deg) rotateZ(135deg);
+            } */
+            100% {
+                transform: rotateX(60deg) rotateY(0deg) rotateZ(360deg);
+            }
+        }
+
+        .glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,255,136,0.2) 0%, rgba(0,255,136,0) 70%);
+            filter: blur(15px);
+            top: -25px;
+            left: -25px;
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cross-container">
+        <div class="glow"></div>
+        <div class="line horizontal">↑</div>
+        <div class="line vertical">↓</div>
+    </div>
+</body>
+</html>
