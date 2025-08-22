@@ -1,6 +1,6 @@
 // 手动环境切换 (true=生产环境, false=测试环境)
 // 部署时请将此值改为true
-const isProduction = true;
+const isProduction = false;
 
 // 初始化EmailJS - 仅在生产环境初始化
 if (isProduction) {

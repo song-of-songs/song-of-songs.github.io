@@ -5,7 +5,7 @@ from email.header import decode_header
 import re
 
 # 配置参数
-ALL = 0  # 设置为1获取所有数据，或设置为0获取特定日期数据
+ALL = 1  # 设置为1获取所有数据，或设置为0获取特定日期数据
 if (ALL == 1):
     TARGET_DATE = None  # 设置为None获取所有数据
 else:
