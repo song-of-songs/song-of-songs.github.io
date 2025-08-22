@@ -20,10 +20,15 @@
 
         .cross-container {
             position: relative;
+            /* position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%); */
             width: 200px;
             height: 200px;
             transform-style: preserve-3d;
             animation: rotate3d 6s infinite linear;
+            z-index: 20;
         }
 
         .line {
@@ -54,15 +59,6 @@
             0% {
                 transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg);
             }
-            /* 25% {
-                transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg);
-            }
-            50% {
-                transform: rotateX(60deg) rotateY(0deg) rotateZ(90deg);
-            }
-            75% {
-                transform: rotateX(60deg) rotateY(0deg) rotateZ(135deg);
-            } */
             100% {
                 transform: rotateX(60deg) rotateY(0deg) rotateZ(360deg);
             }
@@ -90,13 +86,64 @@
                 transform: scale(1.1);
             }
         }
+
+        .guitar-container {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+            perspective: 800px;
+        }
+
+        .guitar-tablature {
+            width: 80%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ff88;
+            border-radius: 4px;
+            padding: 20px 0;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+            transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg);
+            transform-style: preserve-3d;
+        }
+
+        .guitar-staff {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .guitar-line {
+            height: 2px;
+            background: linear-gradient(to right, 
+                rgba(255,255,255,0.8) 0%, 
+                rgba(255,255,255,0.6) 50%, 
+                rgba(255,255,255,0.8) 100%);
+            margin: 0 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="cross-container">
-        <div class="glow"></div>
-        <div class="line horizontal">↑</div>
-        <div class="line vertical">↓</div>
+    <div id="app">
+        <div class="cross-container">
+            <div class="glow"></div>
+            <div class="line horizontal">↑</div>
+            <div class="line vertical">↓</div>
+        </div>
+        <div class="guitar-container">
+            <div class="guitar-tablature">
+                <div class="guitar-staff">
+                    <div class="guitar-line"></div>
+                    <div class="guitar-line"></div>
+                    <div class="guitar-line"></div>
+                    <div class="guitar-line"></div>
+                    <div class="guitar-line"></div>
+                    <div class="guitar-line"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
