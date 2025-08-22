@@ -10,7 +10,7 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: justify;
             min-height: 100vh;
             background: linear-gradient(135deg, #f8f6ff 0%, #f0edff 50%, #e8e5ff 100%);
             overflow: hidden;
@@ -20,9 +20,12 @@
 
         .cross-container {
             position: absolute;
+            top: 20%;
+            left: 25%;
+            /* position: absolute;
             top: 30%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); */
             width: 200px;
             height: 200px;
             transform-style: preserve-3d;
@@ -88,6 +91,17 @@
 
         .guitar-container {
             position: absolute;
+            bottom: 30%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+            perspective: 800px;
+        }
+
+        .guitar-container1 {
+            position: absolute;
             bottom: 10%;
             left: 0;
             width: 100%;
@@ -103,7 +117,7 @@
             border: 2px solid #d6c2ff;
             border-radius: 12px;
             padding: 20px 0;
-            transform: rotateX(45deg) rotateY(0deg) rotateZ(0deg);
+            transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg);
             transform-style: preserve-3d;
             box-shadow: 0 8px 20px rgba(214, 194, 255, 0.2);
         }
@@ -366,6 +380,11 @@
                     <div class="guitar-line"><span class="line-number">5</span></div>
                     <div class="guitar-line"><span class="line-number">6</span></div>
                 </div>
+            </div>
+        </div>
+        <div class="guitar-container1">
+            <div class="guitar-tablature">
+                <div class="guitar-staff">节奏方向箭头</div>
             </div>
         </div>
     </div>
