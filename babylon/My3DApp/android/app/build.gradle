@@ -76,6 +76,20 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    
+    // 添加JVM工具链配置来解决兼容性问题
+    kotlin {
+        jvmToolchain(17)
+    }
 
     namespace "com.my3dapp"
     defaultConfig {
